@@ -1,0 +1,4 @@
+# One file for ALL dependencies (Flask, fpdf, pandas)
+Flask
+fpdf
+pandas
