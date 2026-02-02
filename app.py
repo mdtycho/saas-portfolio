@@ -15,8 +15,7 @@ def create_app():
     env = os.environ.get('FLASK_ENV', 'development')
 
     print("what is going on?")
-    print(request.headers)
-    print(request.host)
+    
 
     # Register blueprints
     from apps.z83_form.routes import z83_bp
@@ -40,6 +39,7 @@ def create_app():
 
     @app.route('/')
     def index():
+        print(f"DEBUG: Root route accessed | Host: {request.host}", flush=True)
         # This will now generate:
         # Local:  /z83/
         # Prod:   https://z83.yourdomain.co.za/
@@ -49,6 +49,9 @@ def create_app():
     # Setup logging
     @app.before_request
     def log_request_headers():
+        print(f"DEBUG: Request Host: {request.host}", flush=True)
+        print(f"DEBUG: Full Headers: {dict(request.headers)}", flush=True)   # dict() makes it cleaner
+        print(f"DEBUG: Request URL: {request.url}", flush=True)
         logging.info(f"Request Host: {request.host}")
         logging.info(f"Full Headers: {request.headers}")
         logging.info(f"Request URL: {request.url}")
