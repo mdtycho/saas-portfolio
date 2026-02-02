@@ -1,5 +1,6 @@
 # The "Master" entry point that runs everything
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
+from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 
 
@@ -12,6 +13,11 @@ def create_app():
     if env == 'production':
         # On the server, we enforce the domain
         app.config['SERVER_NAME'] = 'zatools.co.za'
+        # Tells Flask to prefer HTTPS when generating links
+        app.config['PREFERRED_URL_SCHEME'] = 'https' 
+        
+        # <--- CRITICAL: Fixes HTTPS behind Coolify
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
     else:
         # Locally, we don't set SERVER_NAME so localhost:8000 still works.
         # BUT: Subdomains won't work locally unless you edit /etc/hosts.
@@ -32,7 +38,11 @@ def create_app():
 
     @app.route('/')
     def index():
-        return "<h1>SaaS Portfolio Active</h1><a href='/z83'>Go to Z83 Editor</a>"
+        # This will now generate:
+        # Local:  /z83/
+        # Prod:   https://z83.yourdomain.co.za/
+        link = url_for('z83.home')
+        return f'<h1>SaaS Portfolio Active</h1><a href="{link}">Go to Z83 Editor</a>'
 
     return app
 
