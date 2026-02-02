@@ -15,6 +15,8 @@ def create_app():
     env = os.environ.get('FLASK_ENV', 'development')
 
     print("what is going on?")
+    print(request.headers)
+    print(request.host)
 
     # Register blueprints
     from apps.z83_form.routes import z83_bp
