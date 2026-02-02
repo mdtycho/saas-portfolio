@@ -7,10 +7,14 @@ import logging
 
 
 def create_app():
+
+    logging.info("App started - test log")
     app = Flask(__name__)
 
    # Check if we are in production (Coolify) or local
     env = os.environ.get('FLASK_ENV', 'development')
+
+    print("what is going on?")
 
     # Register blueprints
     from apps.z83_form.routes import z83_bp
