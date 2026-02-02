@@ -10,6 +10,9 @@ def create_app():
    # Check if we are in production (Coolify) or local
     env = os.environ.get('FLASK_ENV', 'development')
 
+    # Register blueprints
+    from apps.z83_form.routes import z83_bp
+    
     if env == 'production':
         # On the server, we enforce the domain
         app.config['SERVER_NAME'] = 'zatools.co.za'
@@ -18,15 +21,6 @@ def create_app():
         
         # <--- CRITICAL: Fixes HTTPS behind Coolify
         app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
-    else:
-        # Locally, we don't set SERVER_NAME so localhost:8000 still works.
-        # BUT: Subdomains won't work locally unless you edit /etc/hosts.
-        pass
-
-    # Register blueprints
-    from apps.z83_form.routes import z83_bp
-    
-    if env == 'production':
         # Production: Use the subdomain
         app.register_blueprint(z83_bp, subdomain='z83')
     else:
