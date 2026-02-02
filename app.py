@@ -36,6 +36,8 @@ def create_app():
 
     return app
 
+# We create the 'app' variable globally so Gunicorn can find it via "app:app"
+app = create_app()
 
 if __name__ == '__main__':
     app = create_app()
