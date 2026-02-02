@@ -11,6 +11,7 @@ z83_bp = Blueprint('z83', __name__,
 
 @z83_bp.route('/', methods=['GET', 'POST'])
 def home():
+    print("DEBUG: Z83 blueprint home route hit!", flush=True)
     if request.method == 'POST':
         # 1. Get data from the HTML form
         surname = request.form.get('surname')
