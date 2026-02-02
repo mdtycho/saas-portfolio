@@ -14,7 +14,8 @@ def create_app():
    # Check if we are in production (Coolify) or local
     env = os.environ.get('FLASK_ENV', 'development')
 
-    print("what is going on?")
+    # Enable subdomain matching explicitly (critical for SERVER_NAME + blueprints)
+    app.url_map.subdomain_matching = True
     
 
     # Register blueprints
