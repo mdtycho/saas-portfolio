@@ -10,9 +10,9 @@ WORKDIR /app
 
 # 4. Install SYSTEM dependencies (Critical for PDF/Image work)
 # We add 'build-essential' and 'libgl1' because many Python PDF libs need them.
+# Removed 'libgl1-mesa-glx' as it's not necessary for most cases.
 RUN apt-get update && apt-get install -y \
     build-essential \
-    libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
 # 5. Install Python dependencies
