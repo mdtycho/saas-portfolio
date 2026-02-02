@@ -5,13 +5,6 @@ import os
 
 import logging
 
-# Setup logging
-@app.before_request
-def log_request_headers():
-    logging.info(f"Request Host: {request.host}")
-    logging.info(f"Full Headers: {request.headers}")
-    logging.info(f"Request URL: {request.url}")
-
 
 def create_app():
     app = Flask(__name__)
@@ -46,6 +39,14 @@ def create_app():
         # Prod:   https://z83.yourdomain.co.za/
         link = url_for('z83.home')
         return f'<h1>SaaS Portfolio Active</h1><a href="{link}">Go to Z83 Editor</a>'
+
+    # Setup logging
+    @app.before_request
+    def log_request_headers():
+        logging.info(f"Request Host: {request.host}")
+        logging.info(f"Full Headers: {request.headers}")
+        logging.info(f"Request URL: {request.url}")
+
 
     return app
 
