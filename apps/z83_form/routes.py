@@ -4,7 +4,8 @@ from pathlib import Path
 
 # Define the Blueprint.
 # strictly separates templates/static so App #1 doesn't break App #2
-z83_bp = Blueprint('z83', __name__, 
+z83_bp = Blueprint('z83', __name__,
+                   subdomain='z83',
                    template_folder='templates',
                    static_folder='static')
 
