@@ -1,7 +1,16 @@
 # The "Master" entry point that runs everything
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 import os
+
+import logging
+
+# Setup logging
+@app.before_request
+def log_request_headers():
+    logging.info(f"Request Host: {request.host}")
+    logging.info(f"Full Headers: {request.headers}")
+    logging.info(f"Request URL: {request.url}")
 
 
 def create_app():
@@ -44,5 +53,5 @@ def create_app():
 app = create_app()
 
 if __name__ == '__main__':
-    app = create_app()
+    logging.basicConfig(level=logging.INFO)
     app.run(debug=True, port=3000)
