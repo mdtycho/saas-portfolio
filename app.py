@@ -9,7 +9,7 @@ import logging
 def create_app():
 
     logging.info("App started - test log")
-    app = Flask(__name__)
+    app = Flask(__name__, subdomain_matching=True)
 
    # Check if we are in production (Coolify) or local
     env = os.environ.get('FLASK_ENV', 'development')
