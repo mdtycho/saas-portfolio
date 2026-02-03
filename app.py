@@ -31,6 +31,17 @@ def create_app():
         app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
         # Production: Use the subdomain
         app.register_blueprint(z83_bp, subdomain='z83')
+
+        # Catch-all for z83 subdomain – dispatches to blueprint's home view
+        @app.route('/', subdomain='z83', methods=['GET', 'POST'])
+        @app.route('/<path:path>', subdomain='z83', methods=['GET', 'POST'])
+        def z83_subdomain_catch_all(path=None):
+            print("DEBUG: App-level z83 subdomain catch-all triggered!", flush=True)
+            print(f"DEBUG: Path captured: {path}", flush=True)
+
+            # Call the blueprint's home function directly
+            # 'home' must match the function name in routes.py
+            return z83_bp.view_functions['home']()
     else:
         # Local: Just use a path prefix so you can test it easily
         # Access at: http://localhost:3000/z83
