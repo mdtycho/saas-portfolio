@@ -3,19 +3,14 @@ from flask import Flask, render_template, url_for, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 
-import logging
 
 
 def create_app():
 
-    logging.info("App started - test log")
     app = Flask(__name__, subdomain_matching=True)
 
    # Check if we are in production (Coolify) or local
     env = os.environ.get('FLASK_ENV', 'development')
-
-    # Enable subdomain matching explicitly (critical for SERVER_NAME + blueprints)
-    app.url_map.subdomain_matching = True
     
 
     # Register blueprints
@@ -32,16 +27,6 @@ def create_app():
         # Production: Use the subdomain
         app.register_blueprint(z83_bp, subdomain='z83')
 
-        # # Catch-all for z83 subdomain – dispatches to blueprint's home view
-        # @app.route('/', subdomain='z83', methods=['GET', 'POST'])
-        # @app.route('/<path:path>', subdomain='z83', methods=['GET', 'POST'])
-        # def z83_subdomain_catch_all(path=None):
-        #     print("DEBUG: App-level z83 subdomain catch-all triggered!", flush=True)
-        #     print(f"DEBUG: Path captured: {path}", flush=True)
-
-        #     # Call the blueprint's home function directly
-        #     # 'home' must match the function name in routes.py
-        #     return z83_bp.view_functions['home']()
     else:
         # Local: Just use a path prefix so you can test it easily
         # Access at: http://localhost:3000/z83
@@ -51,22 +36,11 @@ def create_app():
 
     @app.route('/')
     def index():
-        print(f"DEBUG: Root route accessed | Host: {request.host}", flush=True)
         # This will now generate:
         # Local:  /z83/
         # Prod:   https://z83.yourdomain.co.za/
         link = url_for('z83.home')
         return f'<h1>SaaS Portfolio Active</h1><a href="{link}">Go to Z83 Editor</a>'
-
-    # Setup logging
-    @app.before_request
-    def log_request_headers():
-        print(f"DEBUG: Request Host: {request.host}", flush=True)
-        print(f"DEBUG: Full Headers: {dict(request.headers)}", flush=True)   # dict() makes it cleaner
-        print(f"DEBUG: Request URL: {request.url}", flush=True)
-        logging.info(f"Request Host: {request.host}")
-        logging.info(f"Full Headers: {request.headers}")
-        logging.info(f"Request URL: {request.url}")
 
 
     return app
@@ -75,5 +49,5 @@ def create_app():
 app = create_app()
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
+    
     app.run(debug=True, port=3000)
