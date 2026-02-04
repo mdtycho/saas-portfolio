@@ -42,8 +42,8 @@ def save_form():
     }
         
     # 4. Load Blank editable Z83
-    # Ensure 'editable_z83.pdf' is inside apps/z83_form/static/
-    base_pdf = os.path.join(z83_bp.static_folder, 'editable_z83.pdf')
+    # Ensure 'editable_Z83.pdf' is inside apps/z83_form/static/
+    base_pdf = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
         
     # 5. Generate
     pdf_helper = SAASPDFHelper(base_pdf, pdf_data)
