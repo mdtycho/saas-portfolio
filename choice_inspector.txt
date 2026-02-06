@@ -1,0 +1,30 @@
+--- ANALYZING: apps/z83_form/static/editable_z83.pdf ---
+Found 91 fields.
+[BUTTON/CHECKBOX] Field: Group2   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group3   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group4   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group5   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group6   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group7   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group8   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group9   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group10   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group11   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group12   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group13   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group14   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[DROPDOWN] Field: 0
+   Options: [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+--------------------
+[DROPDOWN] Field: 1
+   Options: [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+--------------------
+[DROPDOWN] Field: 3
+   Options: [' ', 'Good', 'Fair', 'Poor']
+--------------------
+[DROPDOWN] Field: 4
+   Options: [' ', 'Good', 'Fair', 'Poor']
+--------------------
+[BUTTON/CHECKBOX] Field: Group16   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------[BUTTON/CHECKBOX] Field: Group17   (Standard Checkbox - try using '/Yes' or '/On')
+--------------------

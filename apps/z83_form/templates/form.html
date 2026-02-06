@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Z83 Smart Editor</title>
     <link rel="stylesheet" href="{{ url_for('z83.static', filename='css/src/output.css') }}">
+    <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}"></script>
     <script src="{{ url_for('z83.static', filename='js/script.js') }}"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen py-10">
@@ -27,20 +28,109 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Surname</label>
+                        <label for="Surname" class="block text-sm font-medium text-gray-700 mb-1">Surname</label>
                         <input type="text" name="Surname" required 
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">First Names</label>
+                        <label for="FirstNames" class="block text-sm font-medium text-gray-700 mb-1">First Names</label>
                         <input type="text" name="FirstNames" required 
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Initials</label>
+                        <label for="Initials" class="block text-sm font-medium text-gray-700 mb-1">Initials</label>
                         <input type="text" name="Initials" required 
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                     </div>
+
+                    <div>
+                        <label for="IdentityNumber" class="block text-sm font-medium text-gray-700 mb-1">Identity Number</label>
+                        <input type="number" name="IdentityNumber" 
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+
+                    <div>
+                        <label for="PassportNumber" class="block text-sm font-medium text-gray-700 mb-1">Passport Number (optional)</label>
+                        <input type="text" name="PassportNumber" 
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+
+                    <div>
+                        <label for="DateOfBirth" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                        <input type="date" name="DateOfBirth" 
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="Race" class="block text-sm font-medium text-gray-700 mb-3">Race</label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="african" name="Race" value="African" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="african" class="ml-3 text-sm text-gray-700">African</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="white" name="Race" value="White"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="white" class="ml-3 text-sm text-gray-700">White</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="coloured" name="Race" value="Coloured"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="coloured" class="ml-3 text-sm text-gray-700">Coloured</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="indian" name="Race" value="Indian"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="indian" class="ml-3 text-sm text-gray-700">Indian</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="countries" class="block text-sm font-medium text-gray-700 mb-1">What is your nationality/citizenship?</label>
+                    <select id="countries" name="countries" hx-post="{{ url_for('z83.country') }}" hx-target="#has-permit"
+                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <option value="">Select A Country</option>
+                        {% for country in countries %}
+                        <option value="{{ country.name.common }}">{{ country.name.official }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div id="has-permit" class="mb-6"></div>
+
+                <div class="mb-6">
+                        <label for="Gender" class="block text-sm font-medium text-gray-700 mb-3">Gender</label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="male" name="Gender" value="Male" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="male" class="ml-3 text-sm text-gray-700">Male</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="female" name="Gender" value="Female"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="female" class="ml-3 text-sm text-gray-700">Female</label>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="mb-6">
+                        <label for="Disability" class="block text-sm font-medium text-gray-700 mb-3">Do you have a disability?</label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-disability" name="Disability" value="Yes" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="yes-disability" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-disability" name="Disability" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="no-disability" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
                 </div>
 
                 <div class="mt-8 flex justify-end">
@@ -53,18 +143,37 @@
 
             <div class="form-step hidden" data-step="2">
                 <h2 class="text-xl font-semibold mb-4 text-blue-700">2. Contact Info</h2>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="tel" name="Phone" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+
+                <div class="mb-6">
+                    <label for="contactOption" class="block text-sm font-medium text-gray-700 mb-3">Preferred Contact Method</label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="post" name="contactOption" value="post" required
+                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                            <label for="post" class="ml-3 text-sm text-gray-700">Post</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="email" name="contactOption" value="email"
+                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                            <label for="email" class="ml-3 text-sm text-gray-700">Email</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="fax" name="contactOption" value="fax"
+                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                            <label for="fax" class="ml-3 text-sm text-gray-700">Fax</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="cellphone" name="contactOption" value="phone"
+                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                            <label for="cellphone" class="ml-3 text-sm text-gray-700">Cellphone</label>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Identity Number</label>
-                    <input type="text" name="IdentityNumber" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                </div>
+                <div id="contact-input" class="mb-4"></div>
 
                 <div class="mt-8 flex justify-between">
                     <button type="button" onclick="prevStep(1)" 
@@ -78,7 +187,220 @@
                 </div>
             </div>
 
-            <div class="form-step hidden" data-step="3">
+             <div class="form-step hidden" data-step="3">
+                <h2 class="text-xl font-semibold mb-4 text-blue-700">3. Criminal and disciplinary history</h2>
+                
+                <div class="mb-6">
+                    <label for="CriminalHistory" class="block text-sm font-medium text-gray-700 mb-3">
+                        Have you been convicted or found guilty of a criminal offence(including an admission of guilt)?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-criminal" name="CriminalHistory" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
+                            <label for="yes-criminal" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-criminal" name="CriminalHistory" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
+                            <label for="no-criminal" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="criminal-details"></div>
+
+                <div class="mb-6">
+                    <label for="PendingCase" class="block text-sm font-medium text-gray-700 mb-3">
+                        Do you have any pending criminal case against you?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-pending" name="PendingCase" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
+                            <label for="yes-pending" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-pending" name="PendingCase" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
+                            <label for="no-pending" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pending-details"></div>
+
+                <div class="mb-6">
+                    <label for="DisciplinaryHistory" class="block text-sm font-medium text-gray-700 mb-3">
+                        Have you ever been dismissed for misconduct from the Public Service?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-disciplinary" name="DisciplinaryHistory" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
+                            <label for="yes-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-disciplinary" name="DisciplinaryHistory" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
+                            <label for="no-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="disciplinary-details"></div>
+
+                <div class="mb-6">
+                    <label for="DisciplinaryPending" class="block text-sm font-medium text-gray-700 mb-3">
+                        Do you have any pending disciplinary case against you?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.disciplinary_pending') }}" hx-target="#pending-disciplinary-details">
+                            <label for="yes-pending-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.disciplinary_pending') }}" hx-target="#pending-disciplinary-details">
+                            <label for="no-pending-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pending-disciplinary-details"></div>
+
+                <div class="mb-6">
+                    <label for="Resigned" class="block text-sm font-medium text-gray-700 mb-3">
+                        Have you resigned from a recent job pending any disciplinaryproceeding against you?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-resigned" name="Resigned" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
+                            <label for="yes-resigned" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-resigned" name="Resigned" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
+                            <label for="no-resigned" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="resigned-details"></div>
+
+                <div class="mb-6">
+                    <label for="Discharged" class="block text-sm font-medium text-gray-700 mb-3">
+                       Have you been discharged or retired from the Public Service on grounds of Ill-health or on condition that your cannot be re-employed?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-discharged" name="Discharged" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label for="yes-discharged" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-discharged" name="Discharged" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label for="no-discharged" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="ConductingBusiness" class="block text-sm font-medium text-gray-700 mb-3">
+                        Are you conducting business with the State or are you a Director of a Public or Private company conducting business with the State?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-conducting-business" name="ConductingBusiness" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.conducting_business') }}" hx-target="#conducting-business-details">
+                            <label for="yes-conducting-business" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-conducting-business" name="ConductingBusiness" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                hx-post="{{ url_for('z83.conducting_business') }}" hx-target="#conducting-business-details">
+                            <label for="no-conducting-business" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="conducting-business-details"></div>
+
+                <div class="mb-6">
+                    <label for="Relinquish" class="block text-sm font-medium text-gray-700 mb-3">
+                       In the event that you are employed in the Public Service, will you immediately relinquish such business interests?
+                    </label>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="radio" id="yes-relinquish" name="Relinquish" value="Yes" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label for="yes-relinquish" class="ml-3 text-sm text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="no-relinquish" name="Relinquish" value="No"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label for="no-relinquish" class="ml-3 text-sm text-gray-700">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="PrivateSectorExperience" class="block text-sm font-medium text-gray-700 mb-3">Years of private sector job experience</label>
+                    <input type="range" id="PrivateSectorExperience" name="PrivateSectorExperience" min="0" max="40" step="1" 
+                           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    <span id="privateSectorValue" class="text-sm text-gray-600">0</span>
+                </div>
+
+                <div class="mb-6">
+                    <label for="PublicSectorExperience" class="block text-sm font-medium text-gray-700 mb-3">Years of public sector job experience</label>
+                    <input type="range" id="PublicSectorExperience" name="PublicSectorExperience" min="0" max="40" step="1" 
+                           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    <span id="publicSectorValue" class="text-sm text-gray-600">0</span>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-4">If your profession or occupation requires official registration, provide date and particulars of registration</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="RegistrationDate" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                            <input type="date" name="RegistrationDate" 
+                                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                        <div>
+                            <label for="RegistrationNumber" class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+                            <input type="text" name="RegistrationNumber" 
+                                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button type="button" onclick="prevStep(2)" 
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                        &larr; Back
+                    </button>
+                    <button type="button" onclick="nextStep(4)" 
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                        Next Step &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-step hidden" data-step="4">
                 <h2 class="text-xl font-semibold mb-4 text-blue-700">3. Finalize</h2>
                 
                 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
@@ -88,13 +410,13 @@
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Profile Name (For saving)</label>
+                    <label for="profile_name" class="block text-sm font-medium text-gray-700 mb-1">Profile Name (For saving)</label>
                     <input type="text" name="profile_name" placeholder="e.g. Z83 data" required
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                 </div>
 
                 <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(2)" 
+                    <button type="button" onclick="prevStep(3)" 
                             class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
                         &larr; Back
                     </button>
