@@ -1,7 +1,5 @@
 from flask import Blueprint, render_template, request, send_file, redirect, url_for
 from common.pdf_utils import SAASPDFHelper
-from common.extensions import db
-from apps.z83_form.models import Z83Form
 from pathlib import Path
 import os
 from flask_htmx import HTMX
@@ -129,18 +127,10 @@ def save_form():
     # 1. Get Data
     data = request.form.to_dict()
     profile_name = data.get('profile_name', 'Unnamed Draft')
-    
-    # 2. Save to Database
-    new_entry = Z83Form(
-        profile_name=profile_name,
-        form_data=data
-    )
-    db.session.add(new_entry)
-    db.session.commit()
 
     print(f"Received form data: {data}")
         
-    # 3. Map Input to PDF Keys (UPDATE THESE WITH YOUR STEP 1 RESULTS!)
+    # 2. Get contact details
     contact_details = ""
     match data.get('contactOption', 'email'):
         case 'post':
@@ -151,6 +141,8 @@ def save_form():
             contact_details = data.get('FaxNumber', '')
         case 'phone':
             contact_details = data.get('Phone', '')
+    
+    # 3. Map Input to PDF Keys (UPDATE THESE WITH YOUR STEP 1 RESULTS!)
     pdf_data = {
         # "PDF_KEY_FROM_SCRIPT": user_variable
         "Surname and Full names": data.get('Surname', ''),      # Example: Change 'Surname' to what the script found
