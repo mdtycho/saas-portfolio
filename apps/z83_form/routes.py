@@ -128,7 +128,7 @@ def save_form():
     data = request.form.to_dict()
     profile_name = data.get('profile_name', 'Unnamed Draft')
 
-    print(f"Received form data: {data}")
+    #print(f"Received form data: {data}")
         
     # 2. Get contact details
     contact_details = ""
@@ -149,7 +149,7 @@ def save_form():
         "Surname and Full names_2": data.get('FirstNames', ''),
         "Initials": data.get('Initials', ''),     # Example: Change 'Initials' to what the script found
         "Identity Number": data.get('IdentityNumber', ''),
-        "Contact details in terms of the above": contact_details,
+        'Contact details in terms of the above': contact_details,
     }
         
     # 4. Load Blank editable Z83

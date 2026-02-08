@@ -5,7 +5,7 @@ function showStep(step) {
     // Show target
     document.querySelector(`.form-step[data-step="${step}"]`).classList.remove('hidden');
     // Update Bar
-    const progress = (step / 4) * 100;
+    const progress = (step / 5) * 100;
     document.getElementById('progressBar').style.width = `${progress}%`;
 }
        
@@ -28,6 +28,29 @@ function nextStep(step) {
 
 function prevStep(step) { showStep(step); }
 
+// Utility to wait for an element to exist in the DOM (useful for dynamic content)
+function waitForElement(selector) {
+  return new Promise((resolve) => {
+    if (document.querySelector(selector)) {
+      return resolve(document.querySelector(selector));
+    }
+
+    const observer = new MutationObserver(() => {
+      const element = document.querySelector(selector);
+      if (element) {
+        observer.disconnect();
+        resolve(element);
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+}
+
+
 
 // Wait for the HTML to be fully loaded
 document.addEventListener("DOMContentLoaded", function() {
@@ -39,13 +62,42 @@ document.addEventListener("DOMContentLoaded", function() {
     // Load
     const saved = localStorage.getItem('z83_draft');
     if (saved) {
+
         const data = JSON.parse(saved);
+
         Object.keys(data).forEach(key => {
             const el = form.elements[key];
             if (el) el.value = data[key];
+
+            // Trigger click event on contactOptions to ensure correct display of contact details field
+            if (key === 'contactOption') {
+                // map contactOption value to the corresponding input field
+                var inputMap = {
+                    'email': 'Email',
+                    'post': 'PostalAddress',
+                    'fax': 'FaxNumber',
+                    'phone': 'Phone'
+                };
+                const event = new Event('change', { bubbles: true });
+                console.log(el.value);
+                const inputElement = document.querySelector(`input[value="${el.value}"]`);
+                inputElement.dispatchEvent(event);
+
+                // populate the contact details field based on the saved contact option
+                const contactFieldId = inputMap[el.value];
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="${contactFieldId}"]`).then(element => {
+                    console.log("Element found:", element);
+                    element.value = data[contactFieldId] || '';
+                });
+                // form.elements[contactFieldId].value = data[contactFieldId] || '';
+            }
         });
+        // Update the display of the range inputs for years of experience when loading saved data.
         document.getElementById('privateSectorValue').textContent = data['PrivateSectorExperience'] || 0;
         document.getElementById('publicSectorValue').textContent = data['PublicSectorExperience'] || 0;
+
         status.textContent = "Draft restored from browser storage";
     }
 

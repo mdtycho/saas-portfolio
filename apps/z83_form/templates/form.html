@@ -145,6 +145,25 @@
                 <h2 class="text-xl font-semibold mb-4 text-blue-700">2. Contact Info</h2>
 
                 <div class="mb-6">
+                    <div>
+                        <label for="PreferredLanguage" class="block text-sm font-medium text-gray-700 mb-1">Preferred language for correspondence</label>
+                        <select id="PreferredLanguage" name="PreferredLanguage"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            <option value="">Select A Language</option>
+                            <option value="IsiZulu">IsiZulu</option>
+                            <option value="Sign Language">Sign Language</option>
+                            <option value="English">English</option>
+                            <option value="Afrikaans">Afrikaans</option>
+                            <option value="IsiXhosa">IsiXhosa</option>
+                            <option value="Sesotho">Sesotho</option>
+                            <option value="Setswana">Setswana</option>
+                            <option value="Xitsonga">Xitsonga</option>
+                            <option value="Siswati">Siswati</option>
+                            <option value="Tshivenda">Tshivenda</option>
+                            <option value="Sepedi">Sepedi</option>
+                            <option value="IsiNdebele">IsiNdebele</option>
+                        </select>
+                    </div>
                     <label for="contactOption" class="block text-sm font-medium text-gray-700 mb-3">Preferred Contact Method</label>
                     <div class="space-y-3">
                         <div class="flex items-center">
@@ -401,11 +420,51 @@
             </div>
 
             <div class="form-step hidden" data-step="4">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">4. Finalize</h2>
+                <h2 class="text-xl font-semibold mb-4 text-blue-700">4. The Advertised Post</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="Position" class="block text-sm font-medium text-gray-700 mb-1">Position for which you are applying (as advertised)</label>
+                        <input type="text" name="Position" required 
+                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="Department" class="block text-sm font-medium text-gray-700 mb-1">Department where the position was advertised</label>
+                        <input type="text" name="Department" required 
+                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="ReferenceNumber" class="block text-sm font-medium text-gray-700 mb-1">Reference number (as stated in the advert)</label>
+                        <input type="text" name="ReferenceNumber" required 
+                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="NoticeTime" class="block text-sm font-medium text-gray-700 mb-1">
+                            If you are offered the position, when can you start OR how much notice must you serve with your current employer?
+                        </label>
+                        <input type="text" name="NoticeTime" placeholder="e.g. 4 weeks" required
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <button type="button" onclick="prevStep(3)" 
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                        &larr; Back
+                    </button>
+                    <button type="button" onclick="nextStep(5)" 
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                        Next Step &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-step hidden" data-step="5">
+                <h2 class="text-xl font-semibold mb-4 text-blue-700">5. Finalize</h2>
                 
                 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
                     <p class="text-sm text-blue-700">
-                        Ready to generate your PDF? This will save your profile to the database.
+                        Ready to generate your PDF?
                     </p>
                 </div>
 
@@ -416,7 +475,7 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(3)" 
+                    <button type="button" onclick="prevStep(4)" 
                             class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
                         &larr; Back
                     </button>
