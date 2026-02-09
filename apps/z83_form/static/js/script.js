@@ -5,7 +5,7 @@ function showStep(step) {
     // Show target
     document.querySelector(`.form-step[data-step="${step}"]`).classList.remove('hidden');
     // Update Bar
-    const progress = (step / 5) * 100;
+    const progress = (step / 6) * 100;
     document.getElementById('progressBar').style.width = `${progress}%`;
 }
        
@@ -67,7 +67,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         Object.keys(data).forEach(key => {
             const el = form.elements[key];
-            if (el) el.value = data[key];
+            if (el){
+                if (el.type === 'checkbox') {
+                    el.checked = data[key] == el.value; // Check the box if the saved value matches the checkbox value
+                }else{
+                    el.value = data[key];
+                }
+            }
 
             // Trigger click event on contactOptions to ensure correct display of contact details field
             if (key === 'contactOption') {
@@ -91,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.log("Element found:", element);
                     element.value = data[contactFieldId] || '';
                 });
-                // form.elements[contactFieldId].value = data[contactFieldId] || '';
             }
         });
         // Update the display of the range inputs for years of experience when loading saved data.

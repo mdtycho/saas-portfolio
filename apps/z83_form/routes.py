@@ -15,6 +15,7 @@ htmx = HTMX(z83_bp)
 
 @z83_bp.route('/', methods=['GET', 'POST'])
 def home():
+    import json
     if htmx:
         contact = request.form.get('contactOption', 'email')
         match contact:
@@ -27,23 +28,20 @@ def home():
             case 'phone':
                     return render_template('partials/contact_options/phone.html')
     
-    # The API endpoint URL for getting countries.
-    url = 'https://restcountries.com/v3.1/all?fields=name'
+    try:
+        # Open the file in read mode ('r')
+        with open('data/countries.json', 'r', encoding='utf-8') as file:
+            # Load the JSON data into a Python dictionary
+            data = json.load(file)
+            data = sorted(data, key=lambda x: x['name']['common'])  # Sort countries by common name
+            return render_template('form.html', countries=data)
 
-    # Make the GET request
-    response = requests.get(url)
+    except FileNotFoundError:
+        print("Error: The file 'data/countries.json' was not found.")
+    except json.JSONDecodeError:
+        print("Error: Failed to decode JSON from the file. Check for invalid syntax.")
 
-    data = {}
-
-    # Check if the request was successful (status code 200-299)
-    if response.status_code == 200:
-        # Parse the JSON response content into a Python dictionary/list
-        data = response.json()
-        data = sorted(data, key=lambda x: x['name']['common'])  # Sort countries by common name
-    else:
-        print(f"Request failed with status code: {response.status_code}")
-        # You can use response.raise_for_status() to raise an exception for bad status codes
-    return render_template('form.html', countries=data)
+    return render_template('form.html')
 
 @z83_bp.route('/country', methods=['POST'])
 def country():

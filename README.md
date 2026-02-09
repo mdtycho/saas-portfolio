@@ -12,4 +12,4 @@ Available tools:
 
 Coming soon:
 
-- Tax calculator.
+- CV Builder.

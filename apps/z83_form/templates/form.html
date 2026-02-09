@@ -459,7 +459,351 @@
                 </div>
             </div>
 
-            <div class="form-step hidden" data-step="5">
+             <div class="form-step hidden" data-step="5">
+                <h2 class="text-xl font-semibold mb-4 text-blue-700">5. Languages and Qualifications</h2>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-4">Language Proficiency</label>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-blue-100">
+                                    <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">Language</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">Speaking</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">Writing</th>
+                                </tr>
+                            </thead>
+                            <tbody id="languageTable">
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="isizulu" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="IsiZulu">
+                                            <label class="ml-2 text-sm text-gray-700">IsiZulu</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="isizulu-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="isizulu-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="sign-language" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Sign Language">
+                                            <label class="ml-2 text-sm text-gray-700">Sign Language</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="sign-language-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="sign-language-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="english" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="English">
+                                            <label class="ml-2 text-sm text-gray-700">English</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="english-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="english-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="afrikaans" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Afrikaans">
+                                            <label class="ml-2 text-sm text-gray-700">Afrikaans</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="afrikaans-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="afrikaans-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="isixhosa" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="IsiXhosa">
+                                            <label class="ml-2 text-sm text-gray-700">IsiXhosa</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="isixhosa-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="isixhosa-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="sesotho" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Sesotho">
+                                            <label class="ml-2 text-sm text-gray-700">Sesotho</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="sesotho-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="sesotho-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="setswana" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Setswana">
+                                            <label class="ml-2 text-sm text-gray-700">Setswana</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="setswana-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="setswana-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="xitsonga" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Xitsonga">
+                                            <label class="ml-2 text-sm text-gray-700">Xitsonga</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="xitsonga-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="xitsonga-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="siswati" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Siswati">
+                                            <label class="ml-2 text-sm text-gray-700">Siswati</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="siswati-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="siswati-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="tshivenda" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Tshivenda">
+                                            <label class="ml-2 text-sm text-gray-700">Tshivenda</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="tshivenda-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="tshivenda-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input form="z83Form" type="checkbox" name="sepedi" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Sepedi">
+                                            <label class="ml-2 text-sm text-gray-700">Sepedi</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="sepedi-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="sepedi-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="language-row hover:bg-gray-50">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" form="z83Form" name="isindebele" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="IsiNdebele">
+                                            <label class="ml-2 text-sm text-gray-700">IsiNdebele</label>
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="isindebele-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <select form="z83Form" name="isindebele-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Good">Good</option>
+                                            <option value="Fair">Fair</option>
+                                            <option value="Poor">Poor</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <script>
+                document.querySelectorAll('.language-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const checkedCount = document.querySelectorAll('.language-checkbox:checked').length;
+                        
+                        if (checkedCount > 5 && !this.checked) {
+                            this.checked = true;
+                            return;
+                        }
+                        
+                        if (checkedCount > 5) {
+                            alert('You can select up to 5 languages only');
+                            this.checked = false;
+                            return;
+                        }
+                        
+                        const row = this.closest('.language-row');
+                        const selects = row.querySelectorAll('.language-select');
+                        selects.forEach(select => {
+                            select.disabled = !this.checked;
+                            if (!this.checked) select.value = '';
+                        });
+                    });
+                });
+                </script>
+                <div class="flex justify-between">
+                    <button type="button" onclick="prevStep(4)" 
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                        &larr; Back
+                    </button>
+                    <button type="button" onclick="nextStep(6)" 
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                        Next Step &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-step hidden" data-step="6">
                 <h2 class="text-xl font-semibold mb-4 text-blue-700">5. Finalize</h2>
                 
                 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
@@ -475,7 +819,7 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(4)" 
+                    <button type="button" onclick="prevStep(5)" 
                             class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
                         &larr; Back
                     </button>
