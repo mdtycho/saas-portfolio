@@ -135,4 +135,45 @@ document.addEventListener("DOMContentLoaded", function() {
             publicSpan.textContent = this.value;
         });
     }
+
+    // Language profciency logic: ensures not more than 5 languages selected and only profiencies for selected languages are enabled.
+    document.querySelectorAll('.language-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const checkedCount = document.querySelectorAll('.language-checkbox:checked').length;
+                        
+            if (checkedCount > 5 && !this.checked) {
+                this.checked = true;
+                return;
+            }
+                        
+            if (checkedCount > 5) {
+                alert('You can select up to 5 languages only');
+                this.checked = false;
+                return;
+            }            
+                        
+            const row = this.closest('.language-row');
+            const selects = row.querySelectorAll('.language-select');
+            selects.forEach(select => {
+                select.disabled = !this.checked;
+                if (!this.checked) select.value = '';
+            });
+        });
+    });
+
+    // Qualifications logic: limits to 4 qualifications and updates the data-quals attribute on the button to keep track of how many have been added. 
+    // Disables the button when the limit is reached.
+    // Note: The actual addition of qualification fields is handled by HTMX via the hx-get attribute on the button, so we only need to manage the count and disabling here.
+    const addQualsBtn = document.getElementById('addQualifications');
+    if (addQualsBtn) {
+        addQualsBtn.addEventListener('click', function() {
+            let count = parseInt(this.getAttribute('data-quals'));
+            if (count >= 4) {
+                this.setAttribute('disabled', 'disabled');
+            } else {
+                count++;
+                this.setAttribute('data-quals', count);
+            }
+        });
+    }
 });

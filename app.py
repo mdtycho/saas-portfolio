@@ -40,8 +40,7 @@ def create_app():
         # This will now generate:
         # Local:  /z83/
         # Prod:   https://z83.zatools.co.za/
-        link = url_for('z83.home')
-        return f'<h1>SaaS Portfolio Active</h1><a href="{link}">Go to Z83 Editor</a>'
+        return render_template('index.html')
 
 
     return app

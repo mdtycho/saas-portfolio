@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Z83 Smart Editor</title>
     <link rel="stylesheet" href="{{ url_for('z83.static', filename='css/src/output.css') }}">
-    <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}"></script>
-    <script src="{{ url_for('z83.static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}" defer></script>
+    <script src="{{ url_for('z83.static', filename='js/script.js') }}" defer></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen py-10">
 
@@ -765,32 +765,38 @@
                         </table>
                     </div>
                 </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-4">Qualifications (highest to lowest)</label>
+                    <div id="qualificationsContainer" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 qualification-row">
+                            <div>
+                                <label for="InstitutionName" class="block text-sm font-medium text-gray-700 mb-1">Name of institution</label>
+                                <input type="text" name="InstitutionName" 
+                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            </div>
+                            <div>
+                                <label for="QualificationName" class="block text-sm font-medium text-gray-700 mb-1">Name of qualification</label>
+                                <input type="text" name="QualificationName" 
+                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            </div>
+                            <div>
+                                <label for="YearObtained" class="block text-sm font-medium text-gray-700 mb-1">Year obtained</label>
+                                <input type="number" name="YearObtained" 
+                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            </div>
+                        </div>
+                    </div>
 
-                <script>
-                document.querySelectorAll('.language-checkbox').forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        const checkedCount = document.querySelectorAll('.language-checkbox:checked').length;
-                        
-                        if (checkedCount > 5 && !this.checked) {
-                            this.checked = true;
-                            return;
-                        }
-                        
-                        if (checkedCount > 5) {
-                            alert('You can select up to 5 languages only');
-                            this.checked = false;
-                            return;
-                        }
-                        
-                        const row = this.closest('.language-row');
-                        const selects = row.querySelectorAll('.language-select');
-                        selects.forEach(select => {
-                            select.disabled = !this.checked;
-                            if (!this.checked) select.value = '';
-                        });
-                    });
-                });
-                </script>
+                    <div class="flex justify-center mt-4">
+                        <button type="button" id="addQualifications" data-quals="1" 
+                        hx-get="{{ url_for('z83.qualifications') }}" hx-target="#qualificationsContainer" hx-swap="beforeend" hx-vals="js:{quals: this.getAttribute('data-quals')}"
+                        class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
                 <div class="flex justify-between">
                     <button type="button" onclick="prevStep(4)" 
                             class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">

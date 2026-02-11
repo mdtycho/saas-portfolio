@@ -120,6 +120,16 @@ def conducting_business():
         else:
             return '<div></div>'
 
+# route for dynamically adding qualifications inputs
+@z83_bp.route('/add_qualifications', methods=['GET'])
+def qualifications():
+    if htmx:
+        quals = int(request.args.get('quals', '1'))
+        if quals < 4:
+            return render_template('partials/qualifications/qualifications.html', qualification_number=quals)
+        else:
+            return render_template('partials/alerts/too_many_qualifications.html')
+
 @z83_bp.route('/save', methods=['POST'])
 def save_form():
     # 1. Get Data
