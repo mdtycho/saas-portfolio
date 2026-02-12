@@ -1,0 +1,67 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 experience-row">
+    <div>
+        <label for="employer_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Employer</label>
+        <input type="text" name="employer_{{experience_number}}"
+            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+    </div>
+    <div>
+        <label for="JobTitle_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+        <input type="text" name="JobTitle_{{experience_number}}"
+            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+    </div>
+    <div>
+        <label for="LeavingReason_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Reason for leaving</label>
+        <input type="text" name="LeavingReason_{{experience_number}}"
+            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+    </div>
+    <div class="col-span-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+        <div>
+            <label for="StartYear_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Year Started</label>
+            <input type="number" name="StartYear_{{experience_number}}"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+        </div>
+        <div>
+            <label for="StartMonth_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Month Started</label>
+            <select name="StartMonth_{{experience_number}}"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                <option value="">Select Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+        <div>
+            <label for="EndYear_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Year Ended</label>
+            <input type="number" name="EndYear_{{experience_number}}"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+        </div>
+        <div>
+            <label for="EndMonth_{{experience_number}}" class="block text-sm font-medium text-gray-700 mb-1">Month Ended</label>
+            <select name="EndMonth_{{experience_number}}"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                <option value="">Select Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+    </div>
+</div>

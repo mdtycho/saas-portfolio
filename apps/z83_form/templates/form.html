@@ -1,107 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z83 Smart Editor</title>
-    <link rel="stylesheet" href="{{ url_for('z83.static', filename='css/src/output.css') }}">
-    <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}" defer></script>
-    <script src="{{ url_for('z83.static', filename='js/script.js') }}" defer></script>
-</head>
-<body class="bg-gray-50 text-gray-800 min-h-screen py-10">
 
-    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg p-8">
-        
-        <div class="mb-8 border-b pb-4">
-            <h1 class="text-3xl font-bold text-gray-900">Z83 Application Form</h1>
-            <p id="saveStatus" class="text-sm text-gray-500 mt-2 h-4">Draft empty</p>
-        </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Z83 Smart Editor</title>
+        <link rel="stylesheet" href="{{ url_for('z83.static', filename='css/src/output.css') }}">
+        <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}" defer></script>
+        <script src="{{ url_for('z83.static', filename='node_modules/signature_pad/dist/signature_pad.umd.min.js') }}"
+            defer></script>
+        <script src="{{ url_for('z83.static', filename='js/script.js') }}" defer></script>
+    </head>
 
-        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-            <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 25%"></div>
-        </div>
+    <body class="bg-gray-50 text-gray-800 min-h-screen py-10">
 
-        <form action="{{ url_for('z83.save_form') }}" method="POST" id="z83Form">
-            
-            <div class="form-step" data-step="1">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">1. Personal Details</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="Surname" class="block text-sm font-medium text-gray-700 mb-1">Surname</label>
-                        <input type="text" name="Surname" required 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label for="FirstNames" class="block text-sm font-medium text-gray-700 mb-1">First Names</label>
-                        <input type="text" name="FirstNames" required 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label for="Initials" class="block text-sm font-medium text-gray-700 mb-1">Initials</label>
-                        <input type="text" name="Initials" required 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
+        <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-lg p-8">
 
-                    <div>
-                        <label for="IdentityNumber" class="block text-sm font-medium text-gray-700 mb-1">Identity Number</label>
-                        <input type="number" name="IdentityNumber" 
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
+            <div class="mb-8 border-b pb-4">
+                <h1 class="text-3xl font-bold text-gray-900">Z83 Application Form</h1>
+                <p id="saveStatus" class="text-sm text-gray-500 mt-2 h-4">Draft empty</p>
+            </div>
 
-                    <div>
-                        <label for="PassportNumber" class="block text-sm font-medium text-gray-700 mb-1">Passport Number (optional)</label>
-                        <input type="text" name="PassportNumber" 
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+                <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                    style="width: 25%"></div>
+            </div>
 
-                    <div>
-                        <label for="DateOfBirth" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                        <input type="date" name="DateOfBirth" 
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
+            <form action="{{ url_for('z83.save_form') }}" method="POST" id="z83Form">
 
-                    <div class="mb-6">
-                        <label for="Race" class="block text-sm font-medium text-gray-700 mb-3">Race</label>
-                        <div class="space-y-3">
-                            <div class="flex items-center">
-                                <input type="radio" id="african" name="Race" value="African" required
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                                <label for="african" class="ml-3 text-sm text-gray-700">African</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="radio" id="white" name="Race" value="White"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                                <label for="white" class="ml-3 text-sm text-gray-700">White</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="radio" id="coloured" name="Race" value="Coloured"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                                <label for="coloured" class="ml-3 text-sm text-gray-700">Coloured</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="radio" id="indian" name="Race" value="Indian"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                                <label for="indian" class="ml-3 text-sm text-gray-700">Indian</label>
+                <div class="form-step" data-step="1">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">1. Personal Details</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="Surname" class="block text-sm font-medium text-gray-700 mb-1">Surname</label>
+                            <input type="text" name="Surname" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                        <div>
+                            <label for="FirstNames" class="block text-sm font-medium text-gray-700 mb-1">First
+                                Names</label>
+                            <input type="text" name="FirstNames" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                        <div>
+                            <label for="Initials" class="block text-sm font-medium text-gray-700 mb-1">Initials</label>
+                            <input type="text" name="Initials" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+
+                        <div>
+                            <label for="IdentityNumber" class="block text-sm font-medium text-gray-700 mb-1">Identity
+                                Number</label>
+                            <input type="number" name="IdentityNumber"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+
+                        <div>
+                            <label for="PassportNumber" class="block text-sm font-medium text-gray-700 mb-1">Passport
+                                Number (optional)</label>
+                            <input type="text" name="PassportNumber"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+
+                        <div>
+                            <label for="DateOfBirth" class="block text-sm font-medium text-gray-700 mb-1">Date of
+                                Birth</label>
+                            <input type="date" name="DateOfBirth"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="Race" class="block text-sm font-medium text-gray-700 mb-3">Race</label>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <input type="radio" id="african" name="Race" value="African" required
+                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                    <label for="african" class="ml-3 text-sm text-gray-700">African</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="white" name="Race" value="White"
+                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                    <label for="white" class="ml-3 text-sm text-gray-700">White</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="coloured" name="Race" value="Coloured"
+                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                    <label for="coloured" class="ml-3 text-sm text-gray-700">Coloured</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="indian" name="Race" value="Indian"
+                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                    <label for="indian" class="ml-3 text-sm text-gray-700">Indian</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div>
-                    <label for="countries" class="block text-sm font-medium text-gray-700 mb-1">What is your nationality/citizenship?</label>
-                    <select id="countries" name="countries" hx-post="{{ url_for('z83.country') }}" hx-target="#has-permit"
-                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        <option value="">Select A Country</option>
-                        {% for country in countries %}
-                        <option value="{{ country.name.common }}">{{ country.name.official }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                    <div>
+                        <label for="countries" class="block text-sm font-medium text-gray-700 mb-1">What is your
+                            nationality/citizenship?</label>
+                        <select id="countries" name="countries" hx-post="{{ url_for('z83.country') }}"
+                            hx-target="#has-permit"
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            <option value="">Select A Country</option>
+                            {% for country in countries %}
+                            <option value="{{ country.name.common }}">{{ country.name.official }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                <div id="has-permit" class="mb-6"></div>
+                    <div id="has-permit" class="mb-6"></div>
 
-                <div class="mb-6">
+                    <div class="mb-6">
                         <label for="Gender" class="block text-sm font-medium text-gray-700 mb-3">Gender</label>
                         <div class="space-y-3">
                             <div class="flex items-center">
@@ -115,10 +126,11 @@
                                 <label for="female" class="ml-3 text-sm text-gray-700">Female</label>
                             </div>
                         </div>
-                </div>
+                    </div>
 
-                <div class="mb-6">
-                        <label for="Disability" class="block text-sm font-medium text-gray-700 mb-3">Do you have a disability?</label>
+                    <div class="mb-6">
+                        <label for="Disability" class="block text-sm font-medium text-gray-700 mb-3">Do you have a
+                            disability?</label>
                         <div class="space-y-3">
                             <div class="flex items-center">
                                 <input type="radio" id="yes-disability" name="Disability" value="Yes" required
@@ -131,716 +143,1057 @@
                                 <label for="no-disability" class="ml-3 text-sm text-gray-700">No</label>
                             </div>
                         </div>
-                </div>
+                    </div>
 
-                <div class="mt-8 flex justify-end">
-                    <button type="button" onclick="nextStep(2)" 
+                    <div class="mt-8 flex justify-end">
+                        <button type="button" onclick="nextStep(2)"
                             class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                        Next Step &rarr;
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-step hidden" data-step="2">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">2. Contact Info</h2>
-
-                <div class="mb-6">
-                    <div>
-                        <label for="PreferredLanguage" class="block text-sm font-medium text-gray-700 mb-1">Preferred language for correspondence</label>
-                        <select id="PreferredLanguage" name="PreferredLanguage"
-                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                            <option value="">Select A Language</option>
-                            <option value="IsiZulu">IsiZulu</option>
-                            <option value="Sign Language">Sign Language</option>
-                            <option value="English">English</option>
-                            <option value="Afrikaans">Afrikaans</option>
-                            <option value="IsiXhosa">IsiXhosa</option>
-                            <option value="Sesotho">Sesotho</option>
-                            <option value="Setswana">Setswana</option>
-                            <option value="Xitsonga">Xitsonga</option>
-                            <option value="Siswati">Siswati</option>
-                            <option value="Tshivenda">Tshivenda</option>
-                            <option value="Sepedi">Sepedi</option>
-                            <option value="IsiNdebele">IsiNdebele</option>
-                        </select>
-                    </div>
-                    <label for="contactOption" class="block text-sm font-medium text-gray-700 mb-3">Preferred Contact Method</label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="post" name="contactOption" value="post" required
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
-                            <label for="post" class="ml-3 text-sm text-gray-700">Post</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="email" name="contactOption" value="email"
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
-                            <label for="email" class="ml-3 text-sm text-gray-700">Email</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="fax" name="contactOption" value="fax"
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
-                            <label for="fax" class="ml-3 text-sm text-gray-700">Fax</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="cellphone" name="contactOption" value="phone"
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                   hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
-                            <label for="cellphone" class="ml-3 text-sm text-gray-700">Cellphone</label>
-                        </div>
-                    </div>
-                </div>
-                <div id="contact-input" class="mb-4"></div>
-
-                <div class="mt-8 flex justify-between">
-                    <button type="button" onclick="prevStep(1)" 
-                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
-                        &larr; Back
-                    </button>
-                    <button type="button" onclick="nextStep(3)" 
-                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                        Next Step &rarr;
-                    </button>
-                </div>
-            </div>
-
-             <div class="form-step hidden" data-step="3">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">3. Criminal and disciplinary history</h2>
-                
-                <div class="mb-6">
-                    <label for="CriminalHistory" class="block text-sm font-medium text-gray-700 mb-3">
-                        Have you been convicted or found guilty of a criminal offence(including an admission of guilt)?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-criminal" name="CriminalHistory" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
-                            <label for="yes-criminal" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-criminal" name="CriminalHistory" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
-                            <label for="no-criminal" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="criminal-details"></div>
-
-                <div class="mb-6">
-                    <label for="PendingCase" class="block text-sm font-medium text-gray-700 mb-3">
-                        Do you have any pending criminal case against you?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-pending" name="PendingCase" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
-                            <label for="yes-pending" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-pending" name="PendingCase" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
-                            <label for="no-pending" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="pending-details"></div>
-
-                <div class="mb-6">
-                    <label for="DisciplinaryHistory" class="block text-sm font-medium text-gray-700 mb-3">
-                        Have you ever been dismissed for misconduct from the Public Service?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-disciplinary" name="DisciplinaryHistory" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
-                            <label for="yes-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-disciplinary" name="DisciplinaryHistory" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
-                            <label for="no-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="disciplinary-details"></div>
-
-                <div class="mb-6">
-                    <label for="DisciplinaryPending" class="block text-sm font-medium text-gray-700 mb-3">
-                        Do you have any pending disciplinary case against you?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.disciplinary_pending') }}" hx-target="#pending-disciplinary-details">
-                            <label for="yes-pending-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.disciplinary_pending') }}" hx-target="#pending-disciplinary-details">
-                            <label for="no-pending-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="pending-disciplinary-details"></div>
-
-                <div class="mb-6">
-                    <label for="Resigned" class="block text-sm font-medium text-gray-700 mb-3">
-                        Have you resigned from a recent job pending any disciplinaryproceeding against you?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-resigned" name="Resigned" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
-                            <label for="yes-resigned" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-resigned" name="Resigned" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
-                            <label for="no-resigned" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="resigned-details"></div>
-
-                <div class="mb-6">
-                    <label for="Discharged" class="block text-sm font-medium text-gray-700 mb-3">
-                       Have you been discharged or retired from the Public Service on grounds of Ill-health or on condition that your cannot be re-employed?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-discharged" name="Discharged" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <label for="yes-discharged" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-discharged" name="Discharged" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <label for="no-discharged" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <label for="ConductingBusiness" class="block text-sm font-medium text-gray-700 mb-3">
-                        Are you conducting business with the State or are you a Director of a Public or Private company conducting business with the State?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-conducting-business" name="ConductingBusiness" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.conducting_business') }}" hx-target="#conducting-business-details">
-                            <label for="yes-conducting-business" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-conducting-business" name="ConductingBusiness" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                hx-post="{{ url_for('z83.conducting_business') }}" hx-target="#conducting-business-details">
-                            <label for="no-conducting-business" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="conducting-business-details"></div>
-
-                <div class="mb-6">
-                    <label for="Relinquish" class="block text-sm font-medium text-gray-700 mb-3">
-                       In the event that you are employed in the Public Service, will you immediately relinquish such business interests?
-                    </label>
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <input type="radio" id="yes-relinquish" name="Relinquish" value="Yes" required
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <label for="yes-relinquish" class="ml-3 text-sm text-gray-700">Yes</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="no-relinquish" name="Relinquish" value="No"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <label for="no-relinquish" class="ml-3 text-sm text-gray-700">No</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <label for="PrivateSectorExperience" class="block text-sm font-medium text-gray-700 mb-3">Years of private sector job experience</label>
-                    <input type="range" id="PrivateSectorExperience" name="PrivateSectorExperience" min="0" max="40" step="1" value="0" 
-                           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                    <span id="privateSectorValue" class="text-sm text-gray-600">0</span>
-                </div>
-
-                <div class="mb-6">
-                    <label for="PublicSectorExperience" class="block text-sm font-medium text-gray-700 mb-3">Years of public sector job experience</label>
-                    <input type="range" id="PublicSectorExperience" name="PublicSectorExperience" min="0" max="40" step="1" value="0"
-                           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                    <span id="publicSectorValue" class="text-sm text-gray-600">0</span>
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-4">If your profession or occupation requires official registration, provide date and particulars of registration</label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="RegistrationDate" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                            <input type="date" name="RegistrationDate" 
-                                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        </div>
-                        <div>
-                            <label for="RegistrationNumber" class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
-                            <input type="text" name="RegistrationNumber" 
-                                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(2)" 
-                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
-                        &larr; Back
-                    </button>
-                    <button type="button" onclick="nextStep(4)" 
-                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                        Next Step &rarr;
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-step hidden" data-step="4">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">4. The Advertised Post</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="Position" class="block text-sm font-medium text-gray-700 mb-1">Position for which you are applying (as advertised)</label>
-                        <input type="text" name="Position" required 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label for="Department" class="block text-sm font-medium text-gray-700 mb-1">Department where the position was advertised</label>
-                        <input type="text" name="Department" required 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label for="ReferenceNumber" class="block text-sm font-medium text-gray-700 mb-1">Reference number (as stated in the advert)</label>
-                        <input type="text" name="ReferenceNumber" required 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="NoticeTime" class="block text-sm font-medium text-gray-700 mb-1">
-                            If you are offered the position, when can you start OR how much notice must you serve with your current employer?
-                        </label>
-                        <input type="text" name="NoticeTime" placeholder="e.g. 4 weeks" required
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(3)" 
-                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
-                        &larr; Back
-                    </button>
-                    <button type="button" onclick="nextStep(5)" 
-                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                        Next Step &rarr;
-                    </button>
-                </div>
-            </div>
-
-             <div class="form-step hidden" data-step="5">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">5. Languages and Qualifications</h2>
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-4">Language Proficiency</label>
-                    <div class="overflow-x-auto">
-                        <table class="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr class="bg-blue-100">
-                                    <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">Language</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">Speaking</th>
-                                    <th class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">Writing</th>
-                                </tr>
-                            </thead>
-                            <tbody id="languageTable">
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="isizulu" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="IsiZulu">
-                                            <label class="ml-2 text-sm text-gray-700">IsiZulu</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="isizulu-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="isizulu-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="sign-language" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Sign Language">
-                                            <label class="ml-2 text-sm text-gray-700">Sign Language</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="sign-language-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="sign-language-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="english" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="English">
-                                            <label class="ml-2 text-sm text-gray-700">English</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="english-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="english-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="afrikaans" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Afrikaans">
-                                            <label class="ml-2 text-sm text-gray-700">Afrikaans</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="afrikaans-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="afrikaans-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="isixhosa" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="IsiXhosa">
-                                            <label class="ml-2 text-sm text-gray-700">IsiXhosa</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="isixhosa-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="isixhosa-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="sesotho" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Sesotho">
-                                            <label class="ml-2 text-sm text-gray-700">Sesotho</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="sesotho-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="sesotho-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="setswana" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Setswana">
-                                            <label class="ml-2 text-sm text-gray-700">Setswana</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="setswana-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="setswana-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="xitsonga" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Xitsonga">
-                                            <label class="ml-2 text-sm text-gray-700">Xitsonga</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="xitsonga-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="xitsonga-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="siswati" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Siswati">
-                                            <label class="ml-2 text-sm text-gray-700">Siswati</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="siswati-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="siswati-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="tshivenda" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Tshivenda">
-                                            <label class="ml-2 text-sm text-gray-700">Tshivenda</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="tshivenda-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="tshivenda-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input form="z83Form" type="checkbox" name="sepedi" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="Sepedi">
-                                            <label class="ml-2 text-sm text-gray-700">Sepedi</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="sepedi-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="sepedi-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="language-row hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex items-center">
-                                            <input type="checkbox" form="z83Form" name="isindebele" class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" value="IsiNdebele">
-                                            <label class="ml-2 text-sm text-gray-700">IsiNdebele</label>
-                                        </div>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="isindebele-speak" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <select form="z83Form" name="isindebele-write" class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Good">Good</option>
-                                            <option value="Fair">Fair</option>
-                                            <option value="Poor">Poor</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-4">Qualifications (highest to lowest)</label>
-                    <div id="qualificationsContainer" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 qualification-row">
-                            <div>
-                                <label for="InstitutionName" class="block text-sm font-medium text-gray-700 mb-1">Name of institution</label>
-                                <input type="text" name="InstitutionName" 
-                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                            </div>
-                            <div>
-                                <label for="QualificationName" class="block text-sm font-medium text-gray-700 mb-1">Name of qualification</label>
-                                <input type="text" name="QualificationName" 
-                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                            </div>
-                            <div>
-                                <label for="YearObtained" class="block text-sm font-medium text-gray-700 mb-1">Year obtained</label>
-                                <input type="number" name="YearObtained" 
-                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center mt-4">
-                        <button type="button" id="addQualifications" data-quals="1" 
-                        hx-get="{{ url_for('z83.qualifications') }}" hx-target="#qualificationsContainer" hx-swap="beforeend" hx-vals="js:{quals: this.getAttribute('data-quals')}"
-                        class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
+                            Next Step &rarr;
                         </button>
                     </div>
                 </div>
-                <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(4)" 
+
+                <div class="form-step hidden" data-step="2">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">2. Contact Info</h2>
+
+                    <div class="mb-6">
+                        <div>
+                            <label for="PreferredLanguage"
+                                class="block text-sm font-medium text-gray-700 mb-1">Preferred language for
+                                correspondence</label>
+                            <select id="PreferredLanguage" name="PreferredLanguage"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                <option value="">Select A Language</option>
+                                <option value="IsiZulu">IsiZulu</option>
+                                <option value="Sign Language">Sign Language</option>
+                                <option value="English">English</option>
+                                <option value="Afrikaans">Afrikaans</option>
+                                <option value="IsiXhosa">IsiXhosa</option>
+                                <option value="Sesotho">Sesotho</option>
+                                <option value="Setswana">Setswana</option>
+                                <option value="Xitsonga">Xitsonga</option>
+                                <option value="Siswati">Siswati</option>
+                                <option value="Tshivenda">Tshivenda</option>
+                                <option value="Sepedi">Sepedi</option>
+                                <option value="IsiNdebele">IsiNdebele</option>
+                            </select>
+                        </div>
+                        <label for="contactOption" class="block text-sm font-medium text-gray-700 mb-3">Preferred
+                            Contact Method</label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="post" name="contactOption" value="post" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                                <label for="post" class="ml-3 text-sm text-gray-700">Post</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="email" name="contactOption" value="email"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                                <label for="email" class="ml-3 text-sm text-gray-700">Email</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="fax" name="contactOption" value="fax"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                                <label for="fax" class="ml-3 text-sm text-gray-700">Fax</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="cellphone" name="contactOption" value="phone"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
+                                <label for="cellphone" class="ml-3 text-sm text-gray-700">Cellphone</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contact-input" class="mb-4"></div>
+
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" onclick="prevStep(1)"
                             class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
-                        &larr; Back
-                    </button>
-                    <button type="button" onclick="nextStep(6)" 
+                            &larr; Back
+                        </button>
+                        <button type="button" onclick="nextStep(3)"
                             class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-                        Next Step &rarr;
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-step hidden" data-step="6">
-                <h2 class="text-xl font-semibold mb-4 text-blue-700">5. Finalize</h2>
-                
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-                    <p class="text-sm text-blue-700">
-                        Ready to generate your PDF?
-                    </p>
+                            Next Step &rarr;
+                        </button>
+                    </div>
                 </div>
 
-                <div class="mb-6">
-                    <label for="profile_name" class="block text-sm font-medium text-gray-700 mb-1">Profile Name (For saving)</label>
-                    <input type="text" name="profile_name" placeholder="e.g. Z83 data" required
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                </div>
+                <div class="form-step hidden" data-step="3">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">3. Criminal and disciplinary history</h2>
 
-                <div class="flex justify-between">
-                    <button type="button" onclick="prevStep(5)" 
+                    <div class="mb-6">
+                        <label for="CriminalHistory" class="block text-sm font-medium text-gray-700 mb-3">
+                            Have you been convicted or found guilty of a criminal offence(including an admission of
+                            guilt)?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-criminal" name="CriminalHistory" value="Yes" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
+                                <label for="yes-criminal" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-criminal" name="CriminalHistory" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
+                                <label for="no-criminal" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="criminal-details"></div>
+
+                    <div class="mb-6">
+                        <label for="PendingCase" class="block text-sm font-medium text-gray-700 mb-3">
+                            Do you have any pending criminal case against you?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-pending" name="PendingCase" value="Yes" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
+                                <label for="yes-pending" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-pending" name="PendingCase" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
+                                <label for="no-pending" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pending-details"></div>
+
+                    <div class="mb-6">
+                        <label for="DisciplinaryHistory" class="block text-sm font-medium text-gray-700 mb-3">
+                            Have you ever been dismissed for misconduct from the Public Service?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-disciplinary" name="DisciplinaryHistory" value="Yes"
+                                    required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
+                                <label for="yes-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-disciplinary" name="DisciplinaryHistory" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
+                                <label for="no-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="disciplinary-details"></div>
+
+                    <div class="mb-6">
+                        <label for="DisciplinaryPending" class="block text-sm font-medium text-gray-700 mb-3">
+                            Do you have any pending disciplinary case against you?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending" value="Yes"
+                                    required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.disciplinary_pending') }}"
+                                    hx-target="#pending-disciplinary-details">
+                                <label for="yes-pending-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.disciplinary_pending') }}"
+                                    hx-target="#pending-disciplinary-details">
+                                <label for="no-pending-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pending-disciplinary-details"></div>
+
+                    <div class="mb-6">
+                        <label for="Resigned" class="block text-sm font-medium text-gray-700 mb-3">
+                            Have you resigned from a recent job pending any disciplinaryproceeding against you?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-resigned" name="Resigned" value="Yes" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
+                                <label for="yes-resigned" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-resigned" name="Resigned" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
+                                <label for="no-resigned" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="resigned-details"></div>
+
+                    <div class="mb-6">
+                        <label for="Discharged" class="block text-sm font-medium text-gray-700 mb-3">
+                            Have you been discharged or retired from the Public Service on grounds of Ill-health or on
+                            condition that your cannot be re-employed?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-discharged" name="Discharged" value="Yes" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="yes-discharged" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-discharged" name="Discharged" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="no-discharged" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="ConductingBusiness" class="block text-sm font-medium text-gray-700 mb-3">
+                            Are you conducting business with the State or are you a Director of a Public or Private
+                            company conducting business with the State?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-conducting-business" name="ConductingBusiness" value="Yes"
+                                    required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.conducting_business') }}"
+                                    hx-target="#conducting-business-details">
+                                <label for="yes-conducting-business" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-conducting-business" name="ConductingBusiness" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    hx-post="{{ url_for('z83.conducting_business') }}"
+                                    hx-target="#conducting-business-details">
+                                <label for="no-conducting-business" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="conducting-business-details"></div>
+
+                    <div class="mb-6">
+                        <label for="Relinquish" class="block text-sm font-medium text-gray-700 mb-3">
+                            In the event that you are employed in the Public Service, will you immediately relinquish
+                            such business interests?
+                        </label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input type="radio" id="yes-relinquish" name="Relinquish" value="Yes" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="yes-relinquish" class="ml-3 text-sm text-gray-700">Yes</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="no-relinquish" name="Relinquish" value="No"
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="no-relinquish" class="ml-3 text-sm text-gray-700">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="PrivateSectorExperience" class="block text-sm font-medium text-gray-700 mb-3">Years
+                            of private sector job experience</label>
+                        <input type="range" id="PrivateSectorExperience" name="PrivateSectorExperience" min="0" max="40"
+                            step="1" value="0" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <span id="privateSectorValue" class="text-sm text-gray-600">0</span>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="PublicSectorExperience" class="block text-sm font-medium text-gray-700 mb-3">Years
+                            of public sector job experience</label>
+                        <input type="range" id="PublicSectorExperience" name="PublicSectorExperience" min="0" max="40"
+                            step="1" value="0" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <span id="publicSectorValue" class="text-sm text-gray-600">0</span>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-4">If your profession or occupation
+                            requires official registration, provide date and particulars of registration</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="RegistrationDate"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                                <input type="date" name="RegistrationDate"
+                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            </div>
+                            <div>
+                                <label for="RegistrationNumber"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+                                <input type="text" name="RegistrationNumber"
+                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(2)"
                             class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
-                        &larr; Back
-                    </button>
-                    <button type="submit" 
-                            class="bg-green-600 text-white px-8 py-2 rounded hover:bg-green-700 transition font-bold shadow-lg">
-                        Generate PDF
-                    </button>
+                            &larr; Back
+                        </button>
+                        <button type="button" onclick="nextStep(4)"
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            Next Step &rarr;
+                        </button>
+                    </div>
                 </div>
+
+                <div class="form-step hidden" data-step="4">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">4. The Advertised Post</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="Position" class="block text-sm font-medium text-gray-700 mb-1">Position for
+                                which you are applying (as advertised)</label>
+                            <input type="text" name="Position" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                        <div>
+                            <label for="Department" class="block text-sm font-medium text-gray-700 mb-1">Department
+                                where the position was advertised</label>
+                            <input type="text" name="Department" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                        <div>
+                            <label for="ReferenceNumber" class="block text-sm font-medium text-gray-700 mb-1">Reference
+                                number (as stated in the advert)</label>
+                            <input type="text" name="ReferenceNumber" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="NoticeTime" class="block text-sm font-medium text-gray-700 mb-1">
+                                If you are offered the position, when can you start OR how much notice must you serve
+                                with your current employer?
+                            </label>
+                            <input type="text" name="NoticeTime" placeholder="e.g. 4 weeks" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(3)"
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                            &larr; Back
+                        </button>
+                        <button type="button" onclick="nextStep(5)"
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            Next Step &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-step hidden" data-step="5">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">5. Languages and Qualifications</h2>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-4">Language Proficiency</label>
+                        <div class="overflow-x-auto">
+                            <table class="w-full border-collapse border border-gray-300">
+                                <thead>
+                                    <tr class="bg-blue-100">
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                                            Language</th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                                            Speaking</th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-700">
+                                            Writing</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="languageTable">
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="isizulu"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="IsiZulu">
+                                                <label class="ml-2 text-sm text-gray-700">IsiZulu</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="isizulu-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="isizulu-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="sign-language"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Sign Language">
+                                                <label class="ml-2 text-sm text-gray-700">Sign Language</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="sign-language-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="sign-language-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="english"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="English">
+                                                <label class="ml-2 text-sm text-gray-700">English</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="english-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="english-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="afrikaans"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Afrikaans">
+                                                <label class="ml-2 text-sm text-gray-700">Afrikaans</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="afrikaans-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="afrikaans-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="isixhosa"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="IsiXhosa">
+                                                <label class="ml-2 text-sm text-gray-700">IsiXhosa</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="isixhosa-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="isixhosa-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="sesotho"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Sesotho">
+                                                <label class="ml-2 text-sm text-gray-700">Sesotho</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="sesotho-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="sesotho-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="setswana"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Setswana">
+                                                <label class="ml-2 text-sm text-gray-700">Setswana</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="setswana-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="setswana-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="xitsonga"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Xitsonga">
+                                                <label class="ml-2 text-sm text-gray-700">Xitsonga</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="xitsonga-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="xitsonga-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="siswati"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Siswati">
+                                                <label class="ml-2 text-sm text-gray-700">Siswati</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="siswati-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="siswati-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="tshivenda"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Tshivenda">
+                                                <label class="ml-2 text-sm text-gray-700">Tshivenda</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="tshivenda-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="tshivenda-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input form="z83Form" type="checkbox" name="sepedi"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="Sepedi">
+                                                <label class="ml-2 text-sm text-gray-700">Sepedi</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="sepedi-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="sepedi-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="language-row hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" form="z83Form" name="isindebele"
+                                                    class="language-checkbox w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    value="IsiNdebele">
+                                                <label class="ml-2 text-sm text-gray-700">IsiNdebele</label>
+                                            </div>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="isindebele-speak"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <select form="z83Form" name="isindebele-write"
+                                                class="language-select w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                                disabled>
+                                                <option value="">Select</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Poor">Poor</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-4">Qualifications (highest to
+                            lowest)</label>
+                        <div id="qualificationsContainer" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 qualification-row">
+                                <div>
+                                    <label for="InstitutionName"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Name of institution</label>
+                                    <input type="text" name="InstitutionName"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div>
+                                    <label for="QualificationName"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Name of
+                                        qualification</label>
+                                    <input type="text" name="QualificationName"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div>
+                                    <label for="YearObtained" class="block text-sm font-medium text-gray-700 mb-1">Year
+                                        obtained</label>
+                                    <input type="number" name="YearObtained"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center mt-4">
+                            <button type="button" id="addQualifications" data-quals="1"
+                                hx-get="{{ url_for('z83.qualifications') }}" hx-target="#qualificationsContainer"
+                                hx-swap="beforeend" hx-vals="js:{quals: this.getAttribute('data-quals')}"
+                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(4)"
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                            &larr; Back
+                        </button>
+                        <button type="button" onclick="nextStep(6)"
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            Next Step &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-step hidden" data-step="6">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">6. Work Experience and References</h2>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-4">Experience (include current
+                            employer)</label>
+                        <div id="experienceContainer" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 experience-row">
+                                <div>
+                                    <label for="employer"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Employer</label>
+                                    <input type="text" name="employer"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div>
+                                    <label for="JobTitle" class="block text-sm font-medium text-gray-700 mb-1">Job
+                                        Title</label>
+                                    <input type="text" name="JobTitle"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div>
+                                    <label for="LeavingReason"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Reason
+                                        for leaving</label>
+                                    <input type="text" name="LeavingReason"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+
+                                <div class="col-span-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                                    <div>
+                                        <label for="StartYear" class="block text-sm font-medium text-gray-700 mb-1">Year
+                                            Started</label>
+                                        <input type="number" name="StartYear"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="StartMonth"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Month Started</label>
+                                        <select name="StartMonth"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                            <option value="">Select Month</option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="EndYear" class="block text-sm font-medium text-gray-700 mb-1">Year
+                                            Ended</label>
+                                        <input type="number" name="EndYear"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                    </div>
+                                    <div>
+                                        <label for="EndMonth" class="block text-sm font-medium text-gray-700 mb-1">Month
+                                            Ended</label>
+                                        <select name="EndMonth"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                            <option value="">Select Month</option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="flex justify-center mt-4">
+                            <button type="button" id="addExperience" data-experience="1"
+                                hx-get="{{ url_for('z83.experience') }}" hx-target="#experienceContainer"
+                                hx-swap="beforeend" hx-vals="js:{experience: this.getAttribute('data-experience')}"
+                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-4">References</label>
+                        <div id="referencesContainer" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reference-row">
+                                <div>
+                                    <label for="ReferenceName"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <input type="text" name="ReferenceName"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div>
+                                    <label for="Relationship"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Relationship to
+                                        you</label>
+                                    <input type="text" name="Relationship"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div>
+                                    <label for="ReferenceTelephone"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Telephone
+                                        Number</label>
+                                    <input type="tel" name="ReferenceTelephone"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Office hours</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="officeOpen"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Office
+                                                open</label>
+                                            <input type="time" id="officeOpen" name="officeOpen"
+                                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                        </div>
+                                        <div>
+                                            <label for="officeClose"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Office
+                                                close</label>
+                                            <input type="time" id="officeClose" name="officeClose"
+                                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center mt-4">
+                            <button type="button" id="addReferences" data-refs="1"
+                                hx-get="{{ url_for('z83.references') }}" hx-target="#referencesContainer"
+                                hx-swap="beforeend" hx-vals="js:{refs: this.getAttribute('data-refs')}"
+                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(5)"
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                            &larr; Back
+                        </button>
+                        <button type="button" onclick="nextStep(7)"
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            Next Step &rarr;
+                        </button>
+                    </div>
+
+
+                </div>
+
+                <div class="form-step hidden" data-step="7">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">7. Declaration & Signature</h2>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Signature</label>
+
+                        <input type="hidden" name="signature_data" id="signatureInput">
+
+                        <div id="openSignatureModal"
+                            class="border-2 border-dashed border-gray-300 rounded-md h-48 cursor-pointer bg-gray-50 hover:bg-gray-100 transition flex items-center justify-center relative overflow-hidden group">
+
+                            <div id="sigPlaceholder" class="text-center">
+                                <svg class="w-10 h-10 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                    </path>
+                                </svg>
+                                <p class="text-sm text-gray-500 font-medium">Click here to sign on screen</p>
+                            </div>
+
+                            <img id="signaturePreview"
+                                class="absolute inset-0 w-full h-full object-contain hidden pointer-events-none p-4" />
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="signedDate" class="block text-sm font-medium text-gray-700 mb-1">Signed Date</label>
+                        <input type="date" id="signedDate" name="signedDate" required
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(6)"
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                            &larr; Back
+                        </button>
+                        <button type="button" onclick="nextStep(8)"
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            Next Step &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-step hidden" data-step="8">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-700">8. Finalize</h2>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                        <p class="text-sm text-blue-700">
+                            Ready to generate your PDF?
+                        </p>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="profile_name" class="block text-sm font-medium text-gray-700 mb-1">Profile Name
+                            (For
+                            saving)</label>
+                        <input type="text" name="profile_name" placeholder="e.g. Z83 data" required
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(7)"
+                            class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition">
+                            &larr; Back
+                        </button>
+                        <button type="submit"
+                            class="bg-green-600 text-white px-8 py-2 rounded hover:bg-green-700 transition font-bold shadow-lg">
+                            Generate PDF
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="signatureModal" class="fixed inset-0 z-50 hidden bg-white flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b bg-gray-50 shadow-sm shrink-0">
+                <button type="button" id="cancelSigBtn"
+                    class="text-gray-600 hover:text-gray-800 font-medium">Cancel</button>
+                <h3 class="text-lg font-semibold text-gray-700">Sign Below</h3>
+                <button type="button" id="saveSigBtn"
+                    class="text-blue-600 hover:text-blue-800 font-bold text-lg">Done</button>
             </div>
 
-        </form>
-    </div>
+            <div class="flex-grow relative bg-gray-100 touch-none w-full" id="canvasContainer">
+                <canvas id="signatureCanvas" class="absolute left-0 top-0 w-full h-full block touch-none cursor-crosshair"></canvas>
+                <div class="absolute bottom-1/4 left-10 right-10 border-b border-gray-300 pointer-events-none"></div>
+                <p class="absolute bottom-5 w-full text-center text-gray-400 text-sm pointer-events-none">Sign using
+                    your finger or mouse</p>
+            </div>
 
-    <script>
-       
-    </script>
-</body>
+            <div class="p-4 bg-white border-t shrink-0 flex justify-center">
+                <button type="button" id="clearSigBtn"
+                    class="px-6 py-2 text-sm text-red-600 border border-red-200 rounded hover:bg-red-50 font-medium">Clear
+                    Signature</button>
+            </div>
+        </div>
+    </body>
+
 </html>

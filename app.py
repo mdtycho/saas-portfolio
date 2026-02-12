@@ -51,4 +51,4 @@ app = create_app()
 if __name__ == '__main__':
     # This prevents the app from crashing on localhost due to subdomain issues.
     app.config['SERVER_NAME'] = None
-    app.run(debug=True, port=3000)
+    app.run(host='0.0.0.0', debug=True, port=3000)

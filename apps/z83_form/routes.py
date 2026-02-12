@@ -2,8 +2,11 @@ from flask import Blueprint, render_template, request, send_file, redirect, url_
 from common.pdf_utils import SAASPDFHelper
 from pathlib import Path
 import os
+import io
+import base64
+import fitz  # PyMuPDF
+from fillpdf import fillpdfs
 from flask_htmx import HTMX
-import requests
 
 # Define the Blueprint.
 # strictly separates templates/static so App #1 doesn't break App #2
@@ -130,6 +133,26 @@ def qualifications():
         else:
             return render_template('partials/alerts/too_many_qualifications.html')
 
+# route for dynamically adding experience inputs
+@z83_bp.route('/add_experience', methods=['GET'])
+def experience():
+    if htmx:
+        experience = int(request.args.get('experience', '1'))
+        if experience < 3:
+            return render_template('partials/experience/experience.html', experience_number=experience)
+        else:
+            return render_template('partials/alerts/too_much_experience.html')
+
+# route for dynamically adding reference inputs
+@z83_bp.route('/add_references', methods=['GET'])
+def references():
+    if htmx:
+        references = int(request.args.get('refs', '1'))
+        if references < 3:
+            return render_template('partials/references/reference.html', reference_number=references)
+        else:
+            return render_template('partials/alerts/too_many_references.html')
+
 @z83_bp.route('/save', methods=['POST'])
 def save_form():
     # 1. Get Data
@@ -166,15 +189,116 @@ def save_form():
         
     # 5. Generate
     pdf_helper = SAASPDFHelper(base_pdf, pdf_data)
-    output_pdf = pdf_helper.fill_smart_pdf()
+    filled_pdf_bytes = pdf_helper.fill_smart_pdf()
 
-    # 6. Make sure temp folder exists.
+    # --- 6. HANDLE SIGNATURE INJECTION (New Code) ---
+    signature_data = data.get('signature_data')
+
+    # Temporary file path for the filled & flattened PDF
+    import tempfile
+
+    with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as tmp_filled:
+        filled_pdf_path = tmp_filled.name
+
+    try:
+        # ----------------------------------------------------------------------
+        # Use fillpdf to fill fields and FLATTEN the form (bakes text permanently)
+        # ----------------------------------------------------------------------
+        from fillpdf import fillpdfs
+
+        pdf_data = {
+            "Surname and Full names": data.get('Surname', ''),
+            "Surname and Full names_2": data.get('FirstNames', ''),
+            "Initials": data.get('Initials', ''),
+            "Identity Number": data.get('IdentityNumber', ''),
+            'Contact details in terms of the above': contact_details,
+            "Date": data.get('signedDate', ''),
+            # Add ALL other field names exactly as they appear in the PDF here
+            # You may need to inspect the PDF fields once with:
+            # print(fillpdfs.get_form_fields(base_pdf_path))
+        }
+
+        base_pdf_path = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
+
+        fillpdfs.write_fillable_pdf(
+            base_pdf_path,
+            filled_pdf_path,
+            pdf_data,
+            flatten=True   # ← This is crucial: bakes appearances → no disappearance
+        )
+
+        # ----------------------------------------------------------------------
+        # Now open the flattened PDF with PyMuPDF → only to add signature image
+        # ----------------------------------------------------------------------
+        doc = fitz.open(filled_pdf_path)
+
+        if signature_data and "base64," in signature_data:
+            # A. Decode signature
+            encoded = signature_data.split(",", 1)[1]
+            img_bytes = base64.b64decode(encoded)
+
+            # B. Place on page 2 (index 1)
+            target_page = doc[1]
+
+            # C. Signature rectangle – adjust these values!
+            #   - y increases DOWNWARD
+            #   - Start conservative, increase y0 to move down
+            fallback_rect = fitz.Rect(
+                x0=0,   # left edge
+                y0=690,   # top edge – increase to move signature DOWN into box
+                x1=420,   # right edge
+                y1=730    # bottom edge – decrease if still too tall
+            ).normalize()
+
+            try:
+                target_page.insert_image(
+                    fallback_rect,
+                    stream=img_bytes,
+                    keep_proportion=True,
+                    overlay=True
+                )
+            except Exception as e:
+                print(f"Signature insert failed: {e}")
+                # Fallback: try slightly different rect or log for debugging
+
+        # D. Save final PDF
+        output_buffer = io.BytesIO()
+        output_buffer.write(
+            doc.write(
+                garbage=4,
+                deflate=True,
+                clean=True
+            )
+        )
+        doc.close()
+
+    except Exception as e:
+        print(f"Error during filling or signature: {e}")
+        # Emergency fallback: return blank or original if critical failure
+        output_buffer = io.BytesIO()
+        with open(base_pdf_path, "rb") as f:
+            output_buffer.write(f.read())
+
+    finally:
+        # Clean up temp file
+        if os.path.exists(filled_pdf_path):
+            try:
+                os.unlink(filled_pdf_path)
+            except:
+                pass
+
+    # 7. Make sure temp folder exists.
     surname = data.get('Surname', 'output')
     p=Path(f"/tmp/{surname}_z83.pdf") 
     p.parent.mkdir(parents=True, exist_ok=True)
 
-    # 7. Save temp path.
+    # 8. Save temp path.
     output_filename = f"/tmp/{surname}_z83.pdf"
+
+    # Rect(128.57899475097656, 696.239990234375, 304.5050048828125, 714.239990234375)
+
+    # 9. Rewind the file to the beginning before sending
+    output_buffer.seek(0)
         
-    # 8. Send file to user
-    return send_file(output_pdf, as_attachment=True, download_name=output_filename, mimetype='application/pdf')
+    # 10. Send file to user
+    return send_file(output_buffer, as_attachment=True, download_name=output_filename, mimetype='application/pdf')
