@@ -13,18 +13,26 @@ WORKDIR /app
 # Removed 'libgl1-mesa-glx' as it's not necessary for most cases.
 RUN apt-get update && apt-get install -y \
     build-essential \
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # 5. Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 6. Copy the rest of your code (app.py, apps/, common/, etc.)
+# 6. Install NPM package for the Signature Pad
+# We copy ONLY the package files first to help with Docker caching
+COPY apps/z83_form/static/package*.json ./apps/z83_form/static/
+RUN cd apps/z83_form/static && npm install
+
+# 7. Copy the rest of your code (app.py, apps/, common/, etc.)
 COPY . .
 
-# 7. Expose the port Gunicorn will use
+# 8. Expose the port Gunicorn will use
 EXPOSE 3000
 
-# 8. The Start Command
+# 9. The Start Command
 # This runs your 'app' object inside 'app.py'
 CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:3000", "app:app"]
