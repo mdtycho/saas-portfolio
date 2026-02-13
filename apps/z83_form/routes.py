@@ -7,6 +7,7 @@ import base64
 import fitz  # PyMuPDF
 from fillpdf import fillpdfs
 from flask_htmx import HTMX
+from datetime import datetime
 
 # Define the Blueprint.
 # strictly separates templates/static so App #1 doesn't break App #2
@@ -165,7 +166,10 @@ def save_form():
     contact_details = ""
     match data.get('contactOption', 'email'):
         case 'post':
-            contact_details = data.get('PostalAddress', '')
+            contact_details = data.get('PostalAddress', '').replace(',', '\n')  # Replace commas with newlines for better PDF formatting
+            contact_details = contact_details.replace('\n\n', '\n')  # Remove any accidental double newlines
+            contact_details = contact_details.strip()  # Remove leading/trailing whitespace
+            contact_details = contact_details.replace('\n ', '\n')  # Remove spaces after newlines
         case 'email':
             contact_details = data.get('Email', '')
         case 'fax':
@@ -173,25 +177,19 @@ def save_form():
         case 'phone':
             contact_details = data.get('Phone', '')
     
-    # 3. Map Input to PDF Keys (UPDATE THESE WITH YOUR STEP 1 RESULTS!)
-    pdf_data = {
-        # "PDF_KEY_FROM_SCRIPT": user_variable
-        "Surname and Full names": data.get('Surname', ''),      # Example: Change 'Surname' to what the script found
-        "Surname and Full names_2": data.get('FirstNames', ''),
-        "Initials": data.get('Initials', ''),     # Example: Change 'Initials' to what the script found
-        "Identity Number": data.get('IdentityNumber', ''),
-        'Contact details in terms of the above': contact_details,
-    }
+   
+   # Parse date strings into a datetime objects
+    # The format string in strptime() MUST match the input string's format
+    signature_date = datetime.strptime(data.get('signedDate', ''), "%Y-%m-%d").strftime("%d/%m/%Y")
+
+    dob_date = datetime.strptime(data.get('DateOfBirth', ''), "%Y-%m-%d").strftime("%d/%m/%Y")
         
-    # 4. Load Blank editable Z83
+    # 3. Load Blank editable Z83
     # Ensure 'editable_Z83.pdf' is inside apps/z83_form/static/
     base_pdf = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
         
-    # 5. Generate
-    pdf_helper = SAASPDFHelper(base_pdf, pdf_data)
-    filled_pdf_bytes = pdf_helper.fill_smart_pdf()
 
-    # --- 6. HANDLE SIGNATURE INJECTION (New Code) ---
+    # --- 4. HANDLE SIGNATURE INJECTION (New Code) ---
     signature_data = data.get('signature_data')
 
     # Temporary file path for the filled & flattened PDF
@@ -207,12 +205,20 @@ def save_form():
         from fillpdf import fillpdfs
 
         pdf_data = {
+            "Position for which you are applying as advertised": data.get('Position', ''),
+            "Department where the position was advertised": data.get('Department', ''),
+            "Reference number as stated in the advert": data.get('ReferenceNumber', ''),
+            "If you are offered the position when can you start OR how much notice must you serve with your current employer": data.get('NoticeTime', ''),
             "Surname and Full names": data.get('Surname', ''),
             "Surname and Full names_2": data.get('FirstNames', ''),
             "Initials": data.get('Initials', ''),
+            "DDMMYY": dob_date,
             "Identity Number": data.get('IdentityNumber', ''),
+            "Passport2 number": data.get('PassportNumber', ''),
+            "Group2": data.get('Race', ''),
+            "Group3": data.get('Gender', ''),
             'Contact details in terms of the above': contact_details,
-            "Date": data.get('signedDate', ''),
+            "Date": signature_date,
             # Add ALL other field names exactly as they appear in the PDF here
             # You may need to inspect the PDF fields once with:
             # print(fillpdfs.get_form_fields(base_pdf_path))
@@ -287,18 +293,18 @@ def save_form():
             except:
                 pass
 
-    # 7. Make sure temp folder exists.
+    # 5. Make sure temp folder exists.
     surname = data.get('Surname', 'output')
     p=Path(f"/tmp/{surname}_z83.pdf") 
     p.parent.mkdir(parents=True, exist_ok=True)
 
-    # 8. Save temp path.
+    # 6. Save temp path.
     output_filename = f"/tmp/{surname}_z83.pdf"
 
     # Rect(128.57899475097656, 696.239990234375, 304.5050048828125, 714.239990234375)
 
-    # 9. Rewind the file to the beginning before sending
+    # 7. Rewind the file to the beginning before sending
     output_buffer.seek(0)
         
-    # 10. Send file to user
+    # 8. Send file to user
     return send_file(output_buffer, as_attachment=True, download_name=output_filename, mimetype='application/pdf')
