@@ -21,15 +21,15 @@ htmx = HTMX(z83_bp)
 def home():
     import json
     if htmx:
-        contact = request.form.get('contactOption', 'email')
+        contact = request.form.get('contactOption', 'Choice2')  # Default to 'email' if not provided
         match contact:
-            case 'post':
+            case 'Choice1':
                 return render_template('partials/contact_options/post.html')
-            case 'email':
+            case 'Choice2':
                 return render_template('partials/contact_options/email.html')
-            case 'fax':
+            case 'Choice3':
                 return render_template('partials/contact_options/fax.html')
-            case 'phone':
+            case 'Choice4':
                     return render_template('partials/contact_options/phone.html')
     
     try:
@@ -64,7 +64,7 @@ def criminal():
         criminal = request.form.get('CriminalHistory', '')
 
         # Ask about past criminal case.
-        if criminal == 'Yes':
+        if criminal == 'Choice6':
             return render_template('partials/criminal/past_details.html')
         else:
             return '<div></div>'
@@ -73,9 +73,10 @@ def criminal():
 def pending_criminal():
     if htmx:
         pending_criminal = request.form.get('PendingCase', '')
+        print(f"Pending criminal case value: {pending_criminal}")  # Debug log
 
         # Ask about pending criminal case.
-        if pending_criminal == 'Yes':
+        if pending_criminal == 'Choice6':
             return render_template('partials/criminal/pending_details.html')
         else:
             return '<div></div>'
@@ -86,7 +87,7 @@ def disciplinary():
         disciplinary = request.form.get('DisciplinaryHistory', '')
 
         # Ask about past disciplinary case.
-        if disciplinary == 'Yes':
+        if disciplinary == 'Choice6':
             return render_template('partials/disciplinary/past_details.html')
         else:
             return '<div></div>'
@@ -97,7 +98,7 @@ def disciplinary_pending():
         disciplinary_pending = request.form.get('DisciplinaryPending', '')
 
         # Ask about pending disciplinary case.
-        if disciplinary_pending == 'Yes':
+        if disciplinary_pending == 'Choice6':
             return render_template('partials/disciplinary/pending_details.html')
         else:
             return '<div></div>'
@@ -108,7 +109,7 @@ def resigned():
         resigned = request.form.get('Resigned', '')
 
         # Ask about resigning due to pending disciplinary case.
-        if resigned == 'Yes':
+        if resigned == 'Choice6':
             return render_template('partials/disciplinary/resigned.html')
         else:
             return '<div></div>'
@@ -119,7 +120,7 @@ def conducting_business():
         conducting_business = request.form.get('ConductingBusiness', '')
 
         # Ask about conducting business.
-        if conducting_business == 'Yes':
+        if conducting_business == 'Choice6':
             return render_template('partials/conducting_business/conducting_business_details.html')
         else:
             return '<div></div>'
@@ -164,17 +165,17 @@ def save_form():
         
     # 2. Get contact details
     contact_details = ""
-    match data.get('contactOption', 'email'):
-        case 'post':
+    match data.get('contactOption', 'Choice3'):
+        case 'Choice1':
             contact_details = data.get('PostalAddress', '').replace(',', '\n')  # Replace commas with newlines for better PDF formatting
             contact_details = contact_details.replace('\n\n', '\n')  # Remove any accidental double newlines
             contact_details = contact_details.strip()  # Remove leading/trailing whitespace
             contact_details = contact_details.replace('\n ', '\n')  # Remove spaces after newlines
-        case 'email':
+        case 'Choice2':
             contact_details = data.get('Email', '')
-        case 'fax':
+        case 'Choice3':
             contact_details = data.get('FaxNumber', '')
-        case 'phone':
+        case 'Choice4':
             contact_details = data.get('Phone', '')
     
    
@@ -183,6 +184,8 @@ def save_form():
     signature_date = datetime.strptime(data.get('signedDate', ''), "%Y-%m-%d").strftime("%d/%m/%Y")
 
     dob_date = datetime.strptime(data.get('DateOfBirth', ''), "%Y-%m-%d").strftime("%d/%m/%Y")
+
+    reg_date = datetime.strptime(data.get('RegistrationDate', ''), "%Y-%m-%d").strftime("%d/%m/%Y")
         
     # 3. Load Blank editable Z83
     # Ensure 'editable_Z83.pdf' is inside apps/z83_form/static/
@@ -204,6 +207,8 @@ def save_form():
         # ----------------------------------------------------------------------
         from fillpdf import fillpdfs
 
+        print(f"Filling PDF with data: {data}")  # Debug log to check data being filled
+
         pdf_data = {
             "Position for which you are applying as advertised": data.get('Position', ''),
             "Department where the position was advertised": data.get('Department', ''),
@@ -217,6 +222,31 @@ def save_form():
             "Passport2 number": data.get('PassportNumber', ''),
             "Group2": data.get('Race', ''),
             "Group3": data.get('Gender', ''),
+            "Group4": data.get('Disability', ''),
+            "Group5": 'Choice6' if data.get('countries', '') == 'South Africa' else 'Choice7',
+            "Text5": '' if data.get('countries', '') == 'South Africa' else data.get('countries', ''),
+            "Group6": '' if data.get('countries', '') == 'South Africa' else data.get('permit', ''),
+            "Group7": data.get('CriminalHistory', ''),
+            "Text6": data.get('CriminalDetails', ''),
+            "Group8": data.get('PendingCase', ''),
+            "Text7": data.get('PendingDetails', ''),
+            "Group9": data.get('DisciplinaryHistory', ''),
+            "Text8": data.get('DisciplinaryDetails', ''),
+            "Group10": data.get('DisciplinaryPending', ''),
+            "Text9": data.get('DisciplinaryPendingDetails', ''),
+            "Group11": data.get('Resigned', ''),
+            "Text10": data.get('ResignedDetails', ''),
+            "Group12": data.get('Discharged', ''),
+            "Group13": data.get('ConductingBusiness', ''),
+            "Text11": data.get('ConductingBusinessDetails', ''),
+            "Group14": data.get('Relinquish', ''),
+            "Text12": data.get('PrivateSectorExperience', ''),
+            "Text14": data.get('PublicSectorExperience', ''),
+            "Text15": reg_date,
+            "Text16": data.get('RegistrationNumber', ''),
+            "Text1": data.get('Initials', ''),
+            "Preferred language for correspondence": data.get('PreferredLanguage', ''),
+            "Group16": data.get('contactOption', ''),
             'Contact details in terms of the above': contact_details,
             "Date": signature_date,
             # Add ALL other field names exactly as they appear in the PDF here

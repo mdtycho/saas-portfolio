@@ -75,17 +75,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
-            // Trigger click event on contactOptions to ensure correct display of contact details field
+            // Trigger change event on contactOptions to ensure correct display of contact details field
             if (key === 'contactOption') {
                 // map contactOption value to the corresponding input field
                 var inputMap = {
-                    'email': 'Email',
-                    'post': 'PostalAddress',
-                    'fax': 'FaxNumber',
-                    'phone': 'Phone'
+                    'Choice2': 'Email',
+                    'Choice1': 'PostalAddress',
+                    'Choice3': 'FaxNumber',
+                    'Choice4': 'Phone'
                 };
                 const event = new Event('change', { bubbles: true });
-                const inputElement = document.querySelector(`input[value="${el.value}"]`);
+                const inputElement = document.querySelector(`input[name="contactOption"][value="${el.value}"]`);
+                console.log(inputElement);
                 inputElement.dispatchEvent(event);
 
                 // populate the contact details field based on the saved contact option
@@ -94,6 +95,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Ensure the contact details field exists on the DOM before trying to set its value
                 waitForElement(`input[name="${contactFieldId}"]`).then(element => {
                     element.value = data[contactFieldId] || '';
+                });
+            }
+
+            // Trigger change event on countries to ensure correct display of permit field
+            if (key === 'countries') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.getElementById('countries');
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="permit"][value="${data['permit']}"]`).then(element => {
+                    element.checked = true;
                 });
             }
         });

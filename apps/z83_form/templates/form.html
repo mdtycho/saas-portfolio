@@ -138,12 +138,12 @@
                             disability?</label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-disability" name="Disability" value="Yes" required
+                                <input type="radio" id="yes-disability" name="Disability" value="Choice6" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <label for="yes-disability" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-disability" name="Disability" value="No"
+                                <input type="radio" id="no-disability" name="Disability" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <label for="no-disability" class="ml-3 text-sm text-gray-700">No</label>
                             </div>
@@ -187,25 +187,25 @@
                             Contact Method</label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="post" name="contactOption" value="post" required
+                                <input type="radio" id="post" name="contactOption" value="Choice1" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
                                 <label for="post" class="ml-3 text-sm text-gray-700">Post</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="email" name="contactOption" value="email"
+                                <input type="radio" id="email" name="contactOption" value="Choice2"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
                                 <label for="email" class="ml-3 text-sm text-gray-700">Email</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="fax" name="contactOption" value="fax"
+                                <input type="radio" id="fax" name="contactOption" value="Choice3"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
                                 <label for="fax" class="ml-3 text-sm text-gray-700">Fax</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="cellphone" name="contactOption" value="phone"
+                                <input type="radio" id="cellphone" name="contactOption" value="Choice4"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.home') }}" hx-target="#contact-input">
                                 <label for="cellphone" class="ml-3 text-sm text-gray-700">Cellphone</label>
@@ -236,13 +236,13 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-criminal" name="CriminalHistory" value="Yes" required
+                                <input type="radio" id="yes-criminal" name="CriminalHistory" value="Choice6" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
                                 <label for="yes-criminal" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-criminal" name="CriminalHistory" value="No"
+                                <input type="radio" id="no-criminal" name="CriminalHistory" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.criminal') }}" hx-target="#criminal-details">
                                 <label for="no-criminal" class="ml-3 text-sm text-gray-700">No</label>
@@ -258,13 +258,13 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-pending" name="PendingCase" value="Yes" required
+                                <input type="radio" id="yes-pending" name="PendingCase" value="Choice6" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
                                 <label for="yes-pending" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-pending" name="PendingCase" value="No"
+                                <input type="radio" id="no-pending" name="PendingCase" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.pending_criminal') }}" hx-target="#pending-details">
                                 <label for="no-pending" class="ml-3 text-sm text-gray-700">No</label>
@@ -280,13 +280,13 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-disciplinary" name="DisciplinaryHistory" value="Yes"
+                                <input type="radio" id="yes-disciplinary" name="DisciplinaryHistory" value="Choice6"
                                     required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
                                 <label for="yes-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-disciplinary" name="DisciplinaryHistory" value="No"
+                                <input type="radio" id="no-disciplinary" name="DisciplinaryHistory" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.disciplinary') }}" hx-target="#disciplinary-details">
                                 <label for="no-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
@@ -302,14 +302,14 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending" value="Yes"
+                                <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending" value="Choice6"
                                     required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.disciplinary_pending') }}"
                                     hx-target="#pending-disciplinary-details">
                                 <label for="yes-pending-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending" value="No"
+                                <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.disciplinary_pending') }}"
                                     hx-target="#pending-disciplinary-details">
@@ -326,13 +326,13 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-resigned" name="Resigned" value="Yes" required
+                                <input type="radio" id="yes-resigned" name="Resigned" value="Choice6" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
                                 <label for="yes-resigned" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-resigned" name="Resigned" value="No"
+                                <input type="radio" id="no-resigned" name="Resigned" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.resigned') }}" hx-target="#resigned-details">
                                 <label for="no-resigned" class="ml-3 text-sm text-gray-700">No</label>
@@ -349,12 +349,12 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-discharged" name="Discharged" value="Yes" required
+                                <input type="radio" id="yes-discharged" name="Discharged" value="Choice6" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <label for="yes-discharged" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-discharged" name="Discharged" value="No"
+                                <input type="radio" id="no-discharged" name="Discharged" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <label for="no-discharged" class="ml-3 text-sm text-gray-700">No</label>
                             </div>
@@ -368,14 +368,14 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-conducting-business" name="ConductingBusiness" value="Yes"
+                                <input type="radio" id="yes-conducting-business" name="ConductingBusiness" value="Choice6"
                                     required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.conducting_business') }}"
                                     hx-target="#conducting-business-details">
                                 <label for="yes-conducting-business" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-conducting-business" name="ConductingBusiness" value="No"
+                                <input type="radio" id="no-conducting-business" name="ConductingBusiness" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.conducting_business') }}"
                                     hx-target="#conducting-business-details">
@@ -393,12 +393,12 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-relinquish" name="Relinquish" value="Yes" required
+                                <input type="radio" id="yes-relinquish" name="Relinquish" value="Choice6" required
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <label for="yes-relinquish" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-relinquish" name="Relinquish" value="No"
+                                <input type="radio" id="no-relinquish" name="Relinquish" value="Choice7"
                                     class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <label for="no-relinquish" class="ml-3 text-sm text-gray-700">No</label>
                             </div>
