@@ -275,6 +275,19 @@ def save_form():
             "Group16": data.get('contactOption', ''),
             'Contact details in terms of the above': contact_details,
             "Date": signature_date,
+            'Name of SchoolTechnical CollegeRow1': data.get('InstitutionName', ''),
+            'Name of qualification obtainedRow1': data.get('QualificationName', ''),
+            'Year obtainedRow1': data.get('YearObtained', ''),
+            'Name of SchoolTechnical CollegeRow2': data.get('InstitutionName_1', ''),
+            'Name of qualification obtainedRow2': data.get('QualificationName_1', ''),
+            'Year obtainedRow2': data.get('YearObtained_1', ''),
+            'Name of SchoolTechnical CollegeRow3': data.get('InstitutionName_2', ''),
+            'Name of qualification obtainedRow3': data.get('QualificationName_2', ''),
+            'Year obtainedRow3': data.get('YearObtained_2', ''),
+            'Name of SchoolTechnical CollegeRow4': data.get('InstitutionName_3', ''),
+            'Name of qualification obtainedRow4': data.get('QualificationName_3', ''),
+            'Year obtainedRow4': data.get('YearObtained_3', ''),
+            'Current study institution and qualification': data.get('InProgressQualification', ''),
             # Add ALL other field names exactly as they appear in the PDF here
             # You may need to inspect the PDF fields once with:
             # print(fillpdfs.get_form_fields(base_pdf_path))
