@@ -1,0 +1,90 @@
+Fields recognized by fillpdfs:
+Position for which you are applying as advertised
+Department where the position was advertised
+Reference number as stated in the advert
+If you are offered the position when can you start OR how much notice must you serve with your current employer
+Surname and Full names
+Surname and Full names_2
+DDMMYY
+Identity Number
+Passport2 number
+Group2
+Group3
+Group4
+Group5
+Text5
+Group6
+Group7
+Text6
+Group8
+Text7
+Group9
+Text8
+Group10
+Text9
+Group11
+Text10
+Group12
+Group13
+Text11
+Group14
+Text12
+Text14
+Text15
+Text16
+Text1
+Preferred language for correspondence
+Group16
+Contact details in terms of the above
+Languages specifyRow1
+Languages specifyRow1_2
+Languages specifyRow1_3
+Languages specifyRow1_4
+Languages specifyRow1_5
+0
+1
+2
+3
+4
+Name of SchoolTechnical CollegeRow1
+Name of qualification obtainedRow1
+Year obtainedRow1
+Name of SchoolTechnical CollegeRow2
+Name of qualification obtainedRow2
+Year obtainedRow2
+Name of SchoolTechnical CollegeRow3
+Name of qualification obtainedRow3
+Year obtainedRow3
+Name of SchoolTechnical CollegeRow4
+Name of qualification obtainedRow4
+Year obtainedRow4
+Current study institution and qualification
+Employer including current employerRow1
+Post heldRow1
+YYRow1
+YYRow1_2
+Reason for leavingRow1
+Employer including current employerRow2
+Post heldRow2
+YYRow2
+YYRow2_2
+Reason for leavingRow2
+Employer including current employerRow3
+Post heldRow3
+YYRow3
+YYRow3_2
+Reason for leavingRow3
+Group17
+If yes Provide the name of the previous employing department and indicate the nature of the condition
+NameRow1
+Relationship to youRow1
+Tel No office hoursRow1
+NameRow2
+Relationship to youRow2
+Tel No office hoursRow2
+NameRow3
+Relationship to youRow3
+Tel No office hoursRow3
+Signature
+Date
+Initials

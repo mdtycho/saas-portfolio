@@ -17,6 +17,28 @@ z83_bp = Blueprint('z83', __name__,
 
 htmx = HTMX(z83_bp)
 
+def get_dropdown_coordinates():
+
+    """Retrieves coordinates of dropdowns in form."""
+
+
+    base_pdf = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
+
+    field_locations = {}
+
+    doc = fitz.open(base_pdf)
+
+    page = doc[1]  # Assuming all dropdowns are on the 2nd page; adjust if needed for widget in page.widgets()
+
+    for widget in page.widgets():
+        if widget.field_name.startswith("Dropdown"):
+            # Save the location.
+            field_locations[widget.field_name] = widget.rect  # This is a fitz.Rect object with x0, y0, x1, y1
+
+    doc.close()
+
+    return field_locations
+
 @z83_bp.route('/', methods=['GET', 'POST'])
 def home():
     import json
@@ -73,7 +95,6 @@ def criminal():
 def pending_criminal():
     if htmx:
         pending_criminal = request.form.get('PendingCase', '')
-        print(f"Pending criminal case value: {pending_criminal}")  # Debug log
 
         # Ask about pending criminal case.
         if pending_criminal == 'Choice6':
@@ -160,8 +181,8 @@ def save_form():
     # 1. Get Data
     data = request.form.to_dict()
     profile_name = data.get('profile_name', 'Unnamed Draft')
+    dropdown_coordinates = get_dropdown_coordinates()
 
-    #print(f"Received form data: {data}")
         
     # 2. Get contact details
     contact_details = ""
@@ -179,7 +200,7 @@ def save_form():
             contact_details = data.get('Phone', '')
     
    
-   # Parse date strings into a datetime objects
+    # Parse date strings into a datetime objects
     # The format string in strptime() MUST match the input string's format
     signature_date = datetime.strptime(data.get('signedDate', ''), "%Y-%m-%d").strftime("%d/%m/%Y")
 
@@ -190,7 +211,13 @@ def save_form():
     # 3. Load Blank editable Z83
     # Ensure 'editable_Z83.pdf' is inside apps/z83_form/static/
     base_pdf = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
-        
+
+    
+    # Retrieve all languages in the form data that match South African languages (these are the field names in the PDF) 
+    
+    all_sa_languages = ['isizulu', 'sign-language', 'english', 'afrikaans', 'isixhosa', 'sesotho', 'setswana', 'tshivenda', 'xitsonga', 'siswati', 'sepedi', 'isindebele']
+
+    form_language_fields = [key for key in data.keys() if key in all_sa_languages]
 
     # --- 4. HANDLE SIGNATURE INJECTION (New Code) ---
     signature_data = data.get('signature_data')
@@ -207,7 +234,6 @@ def save_form():
         # ----------------------------------------------------------------------
         from fillpdf import fillpdfs
 
-        print(f"Filling PDF with data: {data}")  # Debug log to check data being filled
 
         pdf_data = {
             "Position for which you are applying as advertised": data.get('Position', ''),
@@ -254,6 +280,14 @@ def save_form():
             # print(fillpdfs.get_form_fields(base_pdf_path))
         }
 
+        # Include language text fields in the dict to be written to the pdf form with fillpdf
+        for i in range(len(form_language_fields)):
+            lang_field =  form_language_fields[i]
+            if i == 0:
+                pdf_data['Languages specifyRow1'] = data.get(lang_field, '')
+            else:
+                pdf_data[f'Languages specifyRow1_{i+1}'] = data.get(lang_field, '')
+
         base_pdf_path = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
 
         fillpdfs.write_fillable_pdf(
@@ -267,6 +301,31 @@ def save_form():
         # Now open the flattened PDF with PyMuPDF → only to add signature image
         # ----------------------------------------------------------------------
         doc = fitz.open(filled_pdf_path)
+
+        # Start by writing language speak and write fields
+
+        for i in range(len(form_language_fields)):
+
+            rect_speak = dropdown_coordinates[f"Dropdown3.0.{i}"]
+            rect_write = dropdown_coordinates[f"Dropdown3.1.{i}"]
+
+            page = doc[1]  # Assuming all dropdowns are on the 2nd page; adjust if needed
+
+            page.insert_text(
+            (rect_speak.x0 + 2, rect_speak.y1 - 4), # Slight padding for alignment
+            data.get(form_language_fields[i] + '-speak', ''),
+            fontsize=10,
+            fontname="helv",
+            color=(0, 0, 0)
+            )
+
+            page.insert_text(
+            (rect_write.x0 + 2, rect_write.y1 - 4), # Slight padding for alignment
+            data.get(form_language_fields[i] + '-write', ''),
+            fontsize=10,
+            fontname="helv",
+            color=(0, 0, 0)
+            )
 
         if signature_data and "base64," in signature_data:
             # A. Decode signature

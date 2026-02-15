@@ -1,0 +1,480 @@
+Field Name: Position for which you are applying as advertised
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Department where the position was advertised
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Reference number as stated in the advert
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: If you are offered the position when can you start OR how much notice must you serve with your current employer
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Surname and Full names
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Surname and Full names_2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: DDMMYY
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Identity Number
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Passport2 number
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group2
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group2
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group2
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group2
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group2
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group3
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group3
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group4
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group4
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group5
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group5
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text5
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group6
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group6
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group7
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group7
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text6
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group8
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group8
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text7
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group9
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group9
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text8
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group10
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group10
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text9
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group11
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group11
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text10
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group12
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group12
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group13
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group13
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text11
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group14
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group14
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Text12
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Text14
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Text15
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Text16
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Text1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Preferred language for correspondence
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group16
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group16
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group16
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group16
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Contact details in terms of the above
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Languages specifyRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Languages specifyRow1_2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Languages specifyRow1_3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Languages specifyRow1_4
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Languages specifyRow1_5
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown3.0.0
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.0.1
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.0.2
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.0.3
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.0.4
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.1.0
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.1.1
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.1.2
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.1.3
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Dropdown3.1.4
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: Name of SchoolTechnical CollegeRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of qualification obtainedRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Year obtainedRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of SchoolTechnical CollegeRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of qualification obtainedRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Year obtainedRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of SchoolTechnical CollegeRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of qualification obtainedRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Year obtainedRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of SchoolTechnical CollegeRow4
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Name of qualification obtainedRow4
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Year obtainedRow4
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Current study institution and qualification
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Employer including current employerRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Post heldRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown1.0.0
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: YYRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown1.0.1
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: YYRow1_2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Reason for leavingRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Employer including current employerRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Post heldRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown1.1.0
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: YYRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown1.1.1
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: YYRow2_2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Reason for leavingRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Employer including current employerRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Post heldRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown1.2.0
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: YYRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Dropdown1.2.1
+Field Value:  
+Widget Type: ComboBox
+--------------------
+Field Name: YYRow3_2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Reason for leavingRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Group17
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: Group17
+Field Value: Off
+Widget Type: RadioButton
+--------------------
+Field Name: If yes Provide the name of the previous employing department and indicate the nature of the condition
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: NameRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Relationship to youRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Tel No office hoursRow1
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: NameRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Relationship to youRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Tel No office hoursRow2
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: NameRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Relationship to youRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Tel No office hoursRow3
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Signature
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Date
+Field Value: 
+Widget Type: Text
+--------------------
+Field Name: Initials
+Field Value: 
+Widget Type: Text
+--------------------

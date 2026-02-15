@@ -111,6 +111,99 @@ document.addEventListener("DOMContentLoaded", function () {
                     element.checked = true;
                 });
             }
+
+            // Trigger change event on CriminalHistory to ensure correct display of CriminalDetails field
+            if (key === 'CriminalHistory') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="CriminalHistory"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="CriminalDetails"]`).then(element => {
+                    element.value = data['CriminalDetails'] || '';
+                });
+            }
+
+            // Trigger change event on PendingCase to ensure correct display of PendingDetails field
+            if (key === 'PendingCase') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="PendingCase"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="PendingDetails"]`).then(element => {
+                    element.value = data['PendingDetails'] || '';
+                });
+            }
+
+            // Trigger change event on DisciplinaryHistory to ensure correct display of DisciplinaryDetails field
+            if (key === 'DisciplinaryHistory') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="DisciplinaryHistory"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="DisciplinaryDetails"]`).then(element => {
+                    element.value = data['DisciplinaryDetails'] || '';
+                });
+            }
+
+            // Trigger change event on DisciplinaryPending to ensure correct display of DisciplinaryPendingDetails field
+            if (key === 'DisciplinaryPending') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="DisciplinaryPending"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="DisciplinaryPendingDetails"]`).then(element => {
+                    element.value = data['DisciplinaryPendingDetails'] || '';
+                });
+            }
+
+            // Trigger change event on Resigned to ensure correct display of ResignedDetails field
+            if (key === 'Resigned') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="Resigned"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="ResignedDetails"]`).then(element => {
+                    element.value = data['ResignedDetails'] || '';
+                });
+            }
+
+            // Trigger change event on ConductingBusiness to ensure correct display of ConductingBusinessDetails field
+            if (key === 'ConductingBusiness') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="ConductingBusiness"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="ConductingBusinessDetails"]`).then(element => {
+                    element.value = data['ConductingBusinessDetails'] || '';
+                });
+            }
+
+            // Enable and populate language proficiency selects based on saved data. This ensures that if a user had selected languages and proficiencies, they will be correctly displayed when the draft is loaded.
+            if (key.endsWith('-speak') || key.endsWith('-write')) {
+                
+                const inputElement = document.querySelector(`select[name="${key}"]`);
+                console.log(inputElement);
+                inputElement.disabled = false;
+                inputElement.value = data[key] || '';
+            }
         });
         // Update the display of the range inputs for years of experience when loading saved data.
         document.getElementById('privateSectorValue').textContent = data['PrivateSectorExperience'] || 0;
