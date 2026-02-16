@@ -135,6 +135,17 @@ def resigned():
         else:
             return '<div></div>'
 
+@z83_bp.route('/discharged', methods=['POST'])
+def discharged():
+    if htmx:
+        discharged = request.form.get('Discharged', '')
+
+        # Ask about being discharged from previous employment.
+        if discharged == 'Choice6':
+            return render_template('partials/disciplinary/discharged.html')
+        else:
+            return '<div></div>'
+
 @z83_bp.route('/conducting_business', methods=['POST'])
 def conducting_business():
     if htmx:
@@ -292,6 +303,7 @@ def save_form():
             'Year obtainedRow4': data.get('YearObtained_3', ''),
             'Current study institution and qualification': data.get('InProgressQualification', ''),
             "Group17": 'Choice1' if data.get('Discharged', '') == 'Choice6' else 'Choice2',
+            'If yes Provide the name of the previous employing department and indicate the nature of the condition': data.get('DischargedDetails', ''),
             "NameRow1": data.get('ReferenceName', ''),
             "Relationship to youRow1": data.get('Relationship', ''),
             'Tel No office hoursRow1': data.get('ReferenceTelephone', '') + ' (' + data.get('officeOpen', '') + ' - ' + data.get('officeClose', '') + ')' if data.get('ReferenceTelephone', '') else '',

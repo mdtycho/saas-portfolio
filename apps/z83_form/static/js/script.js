@@ -75,6 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
+            // Handle the addition of more qualifications, experience, and references when loading saved data. This ensures that if a user had added multiple qualifications/experience/reference entries, they will be correctly displayed when the draft is loaded.
+            // const dynamicFieldPrefixes = ['employer_', 'InstitutionName_', 'ReferenceName_'];
+            // if (dynamicFieldPrefixes.some(prefix => key.startsWith(prefix))) {}
+
             // Trigger change event on contactOptions to ensure correct display of contact details field
             if (key === 'contactOption') {
                 // map contactOption value to the corresponding input field
@@ -179,6 +183,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Ensure the contact details field exists on the DOM before trying to set its value
                 waitForElement(`input[name="ResignedDetails"]`).then(element => {
                     element.value = data['ResignedDetails'] || '';
+                });
+            }
+
+            // Trigger change event on Discharged to ensure correct display of DischargedDetails field
+            if (key === 'Discharged') {
+                
+                const event = new Event('change', { bubbles: true });
+                const inputElement = document.querySelector(`input[name="Discharged"][value="${el.value}"]`);
+                console.log(inputElement);
+                inputElement.dispatchEvent(event);
+
+                // Ensure the contact details field exists on the DOM before trying to set its value
+                waitForElement(`input[name="DischargedDetails"]`).then(element => {
+                    element.value = data['DischargedDetails'] || '';
                 });
             }
 
