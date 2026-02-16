@@ -219,6 +219,9 @@ def save_form():
 
     form_language_fields = [key for key in data.keys() if key in all_sa_languages]
 
+    # Retrieve all form fields that start with 'employer'
+    employer_fields = [key for key in data.keys() if key.startswith('employer')]
+
     # --- 4. HANDLE SIGNATURE INJECTION (New Code) ---
     signature_data = data.get('signature_data')
 
@@ -288,6 +291,16 @@ def save_form():
             'Name of qualification obtainedRow4': data.get('QualificationName_3', ''),
             'Year obtainedRow4': data.get('YearObtained_3', ''),
             'Current study institution and qualification': data.get('InProgressQualification', ''),
+            "Group17": 'Choice1' if data.get('Discharged', '') == 'Choice6' else 'Choice2',
+            "NameRow1": data.get('ReferenceName', ''),
+            "Relationship to youRow1": data.get('Relationship', ''),
+            'Tel No office hoursRow1': data.get('ReferenceTelephone', '') + ' (' + data.get('officeOpen', '') + ' - ' + data.get('officeClose', '') + ')' if data.get('ReferenceTelephone', '') else '',
+            "NameRow2": data.get('ReferenceName_1', ''),
+            "Relationship to youRow2": data.get('Relationship_1', ''),
+            'Tel No office hoursRow2': data.get('ReferenceTelephone_1', '') + ' (' + data.get('officeOpen_1', '') + ' - ' + data.get('officeClose_1', '') + ')' if data.get('ReferenceTelephone_1', '') else '',
+            "NameRow3": data.get('ReferenceName_2', ''),
+            "Relationship to youRow3": data.get('Relationship_2', ''),
+            'Tel No office hoursRow3': data.get('ReferenceTelephone_2', '') + ' (' + data.get('officeOpen_2', '') + ' - ' + data.get('officeClose_2', '') + ')' if data.get('ReferenceTelephone_2', '') else '',
             # Add ALL other field names exactly as they appear in the PDF here
             # You may need to inspect the PDF fields once with:
             # print(fillpdfs.get_form_fields(base_pdf_path))
@@ -301,6 +314,16 @@ def save_form():
             else:
                 pdf_data[f'Languages specifyRow1_{i+1}'] = data.get(lang_field, '')
 
+        # Write the text fields associated with an employer to the dict
+        for i in range(len(employer_fields)):
+            underscore = '' if i == 0 else f'_{i}'
+            emp_field = employer_fields[i]
+            pdf_data[f"Employer including current employerRow{i+1}"] = data.get(emp_field, '')
+            pdf_data[f"Post heldRow{i+1}"] = data.get(f"JobTitle{underscore}", '')
+            pdf_data[f"YYRow{i+1}"] = data.get(f"StartYear{underscore}", '')
+            pdf_data[f"YYRow{i+1}_2"] = data.get(f"EndYear{underscore}", '')
+            pdf_data[f"Reason for leavingRow{i+1}"] = data.get(f"LeavingReason{underscore}", '')
+
         base_pdf_path = os.path.join(z83_bp.static_folder, 'editable_Z83.pdf')
 
         fillpdfs.write_fillable_pdf(
@@ -310,10 +333,20 @@ def save_form():
             flatten=True   # ← This is crucial: bakes appearances → no disappearance
         )
 
-        # ----------------------------------------------------------------------
-        # Now open the flattened PDF with PyMuPDF → only to add signature image
-        # ----------------------------------------------------------------------
+        # -----------------------------------------------------------------------------------------
+        # Now open the flattened PDF with PyMuPDF → only to add signature image and dropdown values
+        # ------------------------------------------------------------------------------------------
         doc = fitz.open(filled_pdf_path)
+
+        # -------------------------------------------------
+        # CRITICAL FIX: Remove the 'Ghost' Widgets
+        # -------------------------------------------------
+        # Since fillpdfs missed these fields, they are still 'live' and blocking your text.
+        # We iterate through all pages and kill any remaining interactive fields.
+        for page in doc:
+            for widget in page.widgets():
+                if widget.field_name.startswith("Dropdown"):
+                    page.delete_widget(widget)
 
         # Start by writing language speak and write fields
 
@@ -339,6 +372,34 @@ def save_form():
             fontname="helv",
             color=(0, 0, 0)
             )
+
+        # Then write the employer dropdown fields
+
+        for i in range(len(employer_fields)):
+            rect_from = dropdown_coordinates[f"Dropdown1.{i}.0"]
+            rect_to = dropdown_coordinates[f"Dropdown1.{i}.1"]
+
+            underscore = '' if i == 0 else f'_{i}'
+
+            page = doc[1]  # Assuming all dropdowns are on the 2nd page; adjust if needed
+
+            page.insert_text(
+            (rect_from.x0+ 2, rect_from.y1 - 4), # Slight padding for alignment
+            data.get(f"StartMonth{underscore}", ''),
+            fontsize=10,
+            fontname="helv",
+            color=(0, 0, 0)
+            )
+
+            page.insert_text(
+            (rect_to.x0 + 2, rect_to.y1 - 4), # Slight padding for alignment
+            data.get(f"EndMonth{underscore}", ''),
+            fontsize=10,
+            fontname="helv",
+            color=(0, 0, 0)
+            )
+
+        # Finally, handle the signature image if it exists
 
         if signature_data and "base64," in signature_data:
             # A. Decode signature
