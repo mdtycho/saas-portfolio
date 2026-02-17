@@ -2,7 +2,7 @@
 
 ## Collection of online software tools that are useful for South Africans.
 
-![zatools logo](static/media/images/logo.png)
+![zatools logo](static/media/images/logo.jpg)
 
 Available tools:
 
