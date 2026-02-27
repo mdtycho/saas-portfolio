@@ -8,8 +8,13 @@
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon_io/favicon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('z83.static', filename='css/src/output.css') }}">
         <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}" defer></script>
-        <script src="{{ url_for('z83.static', filename='node_modules/signature_pad/dist/signature_pad.umd.min.js') }}"
-            defer></script>
+        <script src="{{ url_for('z83.static', filename='node_modules/signature_pad/dist/signature_pad.umd.min.js') }}" defer></script>
+        <script type="text/javascript" defer>
+            // Retrieve the urls required for adding additional qualification, experience etc for use in script.js
+            const qualificationUrl = "{{ url_for('z83.qualifications') }}";
+            const experienceUrl = "{{ url_for('z83.experience') }}";
+            const referenceUrl = "{{ url_for('z83.references') }}";
+        </script>
         <script src="{{ url_for('z83.static', filename='js/script.js') }}" defer></script>
     </head>
 

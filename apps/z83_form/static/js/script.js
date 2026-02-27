@@ -50,10 +50,25 @@ function waitForElement(selector) {
     });
 }
 
+function incrementExperience() {
+    const btn = document.getElementById('addExperience');
+    let count = parseInt(btn.getAttribute('data-experience')) || 0;
+
+    if (count >= 3) {
+        btn.setAttribute('disabled', 'disabled');
+    } else {
+        count++;
+        btn.setAttribute('data-experience', count);
+    }
+
+    console.log('Experience count:', btn.getAttribute('data-experience'));
+    console.log('Experience count from variable:', count);
+};
+
 
 
 // Wait for the HTML to be fully loaded
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
 
     // --- 2. AUTO-SAVE LOGIC ---
     const form = document.getElementById('z83Form');
@@ -65,7 +80,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const data = JSON.parse(saved);
 
-        Object.keys(data).forEach(key => {
+        console.log(data);
+
+        for(const key of Object.keys(data)) {
             const el = form.elements[key];
             if (el) {
                 if (el.type === 'checkbox') {
@@ -76,8 +93,52 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Handle the addition of more qualifications, experience, and references when loading saved data. This ensures that if a user had added multiple qualifications/experience/reference entries, they will be correctly displayed when the draft is loaded.
-            // const dynamicFieldPrefixes = ['employer_', 'InstitutionName_', 'ReferenceName_'];
-            // if (dynamicFieldPrefixes.some(prefix => key.startsWith(prefix))) {}
+            const dynamicFieldPrefixes = ['employer_', 'InstitutionName_', 'ReferenceName_'];
+            if (dynamicFieldPrefixes.some(prefix => key.startsWith(prefix))) {
+                const index = parseInt(key.at(-1)); // Get the index from the end of the key (e.g., 0, 1, 2)
+                if (key.startsWith('employer_')) {
+                    console.log('key: ', key);
+                    const button = document.getElementById('addExperience');
+                    console.log('experienceCount: ', button.dataset.experience);
+                    const params = new URLSearchParams();
+
+                    params.append("experience", button.dataset.experience);
+
+                    const response = await fetch(`${experienceUrl}?${params}`);
+                    const markup = await response.text();
+                    const experienceContainer = document.getElementById('experienceContainer');
+                    experienceContainer.insertAdjacentHTML('beforeend', markup);
+                    button.dataset.experience = parseInt(button.dataset.experience) + 1;
+                    console.log('button.dataset.experience: ', button.dataset.experience);
+                    // Get element id's and populate the elements
+                    const employer_id = `employer_${index}`;
+                    document.getElementsByName(employer_id)[0].value = data[employer_id];
+
+                    const job_title_id = `JobTitle_${index}`;
+                    document.getElementsByName(job_title_id)[0].value = data[job_title_id];
+
+                    const leaving_reason = `LeavingReason_${index}`;
+                    document.getElementsByName(leaving_reason)[0].value = data[leaving_reason];
+
+                    const start_year = `StartYear_${index}`;
+                    document.getElementsByName(start_year)[0].value = data[start_year];
+
+                    const start_month = `StartMonth_${index}`;
+                    document.getElementsByName(start_month)[0].value = data[start_month];
+
+                    const end_year = `EndYear_${index}`;
+                    document.getElementsByName(end_year)[0].value = data[end_year];
+
+                    const end_month = `EndMonth_${index}`;
+                    document.getElementsByName(end_month)[0].value = data[end_month];
+                }else if (key.startsWith('InstitutionName_')) {
+                    const button = document.getElementById('addQualification');
+                    button.click(); // Simulate click to add experience fields
+                }else if (key.startsWith('ReferenceName_')) {
+                    const button = document.getElementById('addReferences');
+                    button.click(); // Simulate click to add reference fields
+                }
+            }
 
             // Trigger change event on contactOptions to ensure correct display of contact details field
             if (key === 'contactOption') {
@@ -222,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 inputElement.disabled = false;
                 inputElement.value = data[key] || '';
             }
-        });
+        };
         // Update the display of the range inputs for years of experience when loading saved data.
         document.getElementById('privateSectorValue').textContent = data['PrivateSectorExperience'] || 0;
         document.getElementById('publicSectorValue').textContent = data['PublicSectorExperience'] || 0;
@@ -306,15 +367,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Note: The actual addition of qualification fields is handled by HTMX via the hx-get attribute on the button, so we only need to manage the count and disabling here.
     const addExpBtn = document.getElementById('addExperience');
     if (addExpBtn) {
-        addExpBtn.addEventListener('click', function () {
-            let count = parseInt(this.getAttribute('data-experience'));
-            if (count >= 3) {
-                this.setAttribute('disabled', 'disabled');
-            } else {
-                count++;
-                this.setAttribute('data-experience', count);
-            }
-        });
+        addExpBtn.addEventListener('click', incrementExperience);
     }
 
     // References logic: limits to 3 reference instances and updates the data-refs attribute on the button to keep track of how many have been added. 

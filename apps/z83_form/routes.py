@@ -170,12 +170,12 @@ def qualifications():
 # route for dynamically adding experience inputs
 @z83_bp.route('/add_experience', methods=['GET'])
 def experience():
-    if htmx:
-        experience = int(request.args.get('experience', '1'))
-        if experience < 3:
-            return render_template('partials/experience/experience.html', experience_number=experience)
-        else:
-            return render_template('partials/alerts/too_much_experience.html')
+    experience = int(request.args.get('experience', ''))
+    print('Experience count from route:', experience)
+    if experience < 3:
+        return render_template('partials/experience/experience.html', experience_number=experience)
+    else:
+        return render_template('partials/alerts/too_much_experience.html')
 
 # route for dynamically adding reference inputs
 @z83_bp.route('/add_references', methods=['GET'])
