@@ -160,12 +160,11 @@ def conducting_business():
 # route for dynamically adding qualifications inputs
 @z83_bp.route('/add_qualifications', methods=['GET'])
 def qualifications():
-    if htmx:
-        quals = int(request.args.get('quals', '1'))
-        if quals < 4:
-            return render_template('partials/qualifications/qualifications.html', qualification_number=quals)
-        else:
-            return render_template('partials/alerts/too_many_qualifications.html')
+    quals = int(request.args.get('quals', '1'))
+    if quals < 4:
+        return render_template('partials/qualifications/qualifications.html', qualification_number=quals)
+    else:
+        return render_template('partials/alerts/too_many_qualifications.html')
 
 # route for dynamically adding experience inputs
 @z83_bp.route('/add_experience', methods=['GET'])
@@ -180,12 +179,11 @@ def experience():
 # route for dynamically adding reference inputs
 @z83_bp.route('/add_references', methods=['GET'])
 def references():
-    if htmx:
-        references = int(request.args.get('refs', '1'))
-        if references < 3:
-            return render_template('partials/references/reference.html', reference_number=references)
-        else:
-            return render_template('partials/alerts/too_many_references.html')
+    references = int(request.args.get('refs', '1'))
+    if references < 3:
+        return render_template('partials/references/reference.html', reference_number=references)
+    else:
+        return render_template('partials/alerts/too_many_references.html')
 
 @z83_bp.route('/save', methods=['POST'])
 def save_form():

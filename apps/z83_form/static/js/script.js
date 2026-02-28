@@ -132,11 +132,48 @@ document.addEventListener("DOMContentLoaded", async function () {
                     const end_month = `EndMonth_${index}`;
                     document.getElementsByName(end_month)[0].value = data[end_month];
                 }else if (key.startsWith('InstitutionName_')) {
-                    const button = document.getElementById('addQualification');
-                    button.click(); // Simulate click to add experience fields
+                    const button = document.getElementById('addQualifications');
+                    const params = new URLSearchParams();
+                    params.append("quals", button.dataset.quals);
+                    const response = await fetch(`${qualificationUrl}?${params}`);
+                    const markup = await response.text();
+                    const qualificationsContainer = document.getElementById('qualificationsContainer');
+                    qualificationsContainer.insertAdjacentHTML('beforeend', markup);
+                    button.dataset.quals = parseInt(button.dataset.quals) + 1;
+                    // Get element id's and populate the elements
+                    const institution_name_id = `InstitutionName_${index}`;
+                    document.getElementsByName(institution_name_id)[0].value = data[institution_name_id];
+
+                    const qualification_name_id = `QualificationName_${index}`;
+                    document.getElementsByName(qualification_name_id)[0].value = data[qualification_name_id];
+
+                    const year_obtained_id = `YearObtained_${index}`;
+                    document.getElementsByName(year_obtained_id)[0].value = data[year_obtained_id];
+                    
                 }else if (key.startsWith('ReferenceName_')) {
                     const button = document.getElementById('addReferences');
-                    button.click(); // Simulate click to add reference fields
+                    const params = new URLSearchParams();
+                    params.append("refs", button.dataset.refs);
+                    const response = await fetch(`${referenceUrl}?${params}`);
+                    const markup = await response.text();
+                    const referencesContainer = document.getElementById('referencesContainer');
+                    referencesContainer.insertAdjacentHTML('beforeend', markup);
+                    button.dataset.refs = parseInt(button.dataset.refs) + 1;
+                    // Get element id's and populate the elements
+                    const reference_name_id = `ReferenceName_${index}`;
+                    document.getElementsByName(reference_name_id)[0].value = data[reference_name_id];
+
+                    const relationship_id = `Relationship_${index}`;
+                    document.getElementsByName(relationship_id)[0].value = data[relationship_id];
+
+                    const reference_telephone_id = `ReferenceTelephone_${index}`;
+                    document.getElementsByName(reference_telephone_id)[0].value = data[reference_telephone_id];
+
+                    const office_open_id = `officeOpen_${index}`;
+                    document.getElementsByName(office_open_id)[0].value = data[office_open_id];
+
+                    const office_close_id = `officeClose_${index}`;
+                    document.getElementsByName(office_close_id)[0].value = data[office_close_id];
                 }
             }
 
