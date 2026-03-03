@@ -8,7 +8,8 @@
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon_io/favicon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('z83.static', filename='css/src/output.css') }}">
         <script src="{{ url_for('z83.static', filename='js/htmx.min.js') }}" defer></script>
-        <script src="{{ url_for('z83.static', filename='node_modules/signature_pad/dist/signature_pad.umd.min.js') }}" defer></script>
+        <script src="{{ url_for('z83.static', filename='node_modules/signature_pad/dist/signature_pad.umd.min.js') }}"
+            defer></script>
         <script type="text/javascript" defer>
             // Retrieve the urls required for adding additional qualification, experience etc for use in script.js
             const qualificationUrl = "{{ url_for('z83.qualifications') }}";
@@ -17,6 +18,16 @@
         </script>
         <script src="{{ url_for('z83.static', filename='js/script.js') }}" defer></script>
     </head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LKS3LLJJYR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-LKS3LLJJYR');
+    </script>
 
     <body class="bg-gray-50 text-gray-800 min-h-screen py-10">
 
@@ -99,7 +110,7 @@
                                         class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                     <label for="indian" class="ml-3 text-sm text-gray-700">Indian</label>
                                 </div>
-                                 <div class="flex items-center">
+                                <div class="flex items-center">
                                     <input type="radio" id="other" name="Race" value="Choice5"
                                         class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                     <label for="other" class="ml-3 text-sm text-gray-700">Other</label>
@@ -308,15 +319,16 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending" value="Choice6"
-                                    required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                <input type="radio" id="yes-pending-disciplinary" name="DisciplinaryPending"
+                                    value="Choice6" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.disciplinary_pending') }}"
                                     hx-target="#pending-disciplinary-details">
                                 <label for="yes-pending-disciplinary" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending" value="Choice7"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                <input type="radio" id="no-pending-disciplinary" name="DisciplinaryPending"
+                                    value="Choice7" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.disciplinary_pending') }}"
                                     hx-target="#pending-disciplinary-details">
                                 <label for="no-pending-disciplinary" class="ml-3 text-sm text-gray-700">No</label>
@@ -378,15 +390,16 @@
                         </label>
                         <div class="space-y-3">
                             <div class="flex items-center">
-                                <input type="radio" id="yes-conducting-business" name="ConductingBusiness" value="Choice6"
-                                    required class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                <input type="radio" id="yes-conducting-business" name="ConductingBusiness"
+                                    value="Choice6" required
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.conducting_business') }}"
                                     hx-target="#conducting-business-details">
                                 <label for="yes-conducting-business" class="ml-3 text-sm text-gray-700">Yes</label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="no-conducting-business" name="ConductingBusiness" value="Choice7"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                <input type="radio" id="no-conducting-business" name="ConductingBusiness"
+                                    value="Choice7" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                     hx-post="{{ url_for('z83.conducting_business') }}"
                                     hx-target="#conducting-business-details">
                                 <label for="no-conducting-business" class="ml-3 text-sm text-gray-700">No</label>
@@ -891,13 +904,14 @@
                         </div>
                     </div>
                     <div class="mb-6">
-                        <label for="InProgressQualification" class="block text-sm font-medium text-gray-700 mb-1">In progress qualification (if any, institution and qualification names)</label>
+                        <label for="InProgressQualification" class="block text-sm font-medium text-gray-700 mb-1">In
+                            progress qualification (if any, institution and qualification names)</label>
                         <input type="text" name="InProgressQualification"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border mb-6">
                     </div>
 
                     <div class="mb-6">
-                        
+
                         <label class="block text-sm font-medium text-gray-700 mb-4">Qualifications (highest to
                             lowest)</label>
                         <div id="qualificationsContainer" class="space-y-4">
@@ -928,11 +942,15 @@
                             <button type="button" id="addQualifications" data-quals="1"
                                 hx-get="{{ url_for('z83.qualifications') }}" hx-target="#qualificationsContainer"
                                 hx-swap="beforeend" hx-vals="js:{quals: this.getAttribute('data-quals')}"
-                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                                class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 4v16m8-8H4"></path>
                                 </svg>
+                                <span
+                                    class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-max px-2 py-1 bg-gray-800 text-white text-xs font-medium rounded shadow-sm opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                                    Add Qualification
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -1038,12 +1056,16 @@
                             <button type="button" id="addExperience" data-experience="1"
                                 hx-get="{{ url_for('z83.experience') }}" hx-target="#experienceContainer"
                                 hx-swap="beforeend" hx-vals="js:{experience: this.getAttribute('data-experience')}"
-                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                                class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 4v16m8-8H4">
                                     </path>
                                 </svg>
+                                <span
+                                    class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-max px-2 py-1 bg-gray-800 text-white text-xs font-medium rounded shadow-sm opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                                    Add Experience
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -1097,11 +1119,15 @@
                             <button type="button" id="addReferences" data-refs="1"
                                 hx-get="{{ url_for('z83.references') }}" hx-target="#referencesContainer"
                                 hx-swap="beforeend" hx-vals="js:{refs: this.getAttribute('data-refs')}"
-                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
+                                class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 4v16m8-8H4"></path>
                                 </svg>
+                                <span
+                                    class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-max px-2 py-1 bg-gray-800 text-white text-xs font-medium rounded shadow-sm opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200">
+                                    Add Reference
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -1126,8 +1152,10 @@
                     <div class="mb-6">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Declaration</label>
                         <p class="text-sm text-gray-600 bg-gray-50 border border-gray-200 p-4 rounded">
-                            I declare that all the information provided (including any attachments) is complete and correct to the best of my knowledge. I understand
-                            that any false information provided will result in my application being disqualified or disciplinary action taken against me if I am appointed:
+                            I declare that all the information provided (including any attachments) is complete and
+                            correct to the best of my knowledge. I understand
+                            that any false information provided will result in my application being disqualified or
+                            disciplinary action taken against me if I am appointed:
                         </p>
                     </div>
 
@@ -1212,7 +1240,8 @@
             </div>
 
             <div class="flex-grow relative bg-gray-100 touch-none w-full" id="canvasContainer">
-                <canvas id="signatureCanvas" class="absolute left-0 top-0 w-full h-full block touch-none cursor-crosshair"></canvas>
+                <canvas id="signatureCanvas"
+                    class="absolute left-0 top-0 w-full h-full block touch-none cursor-crosshair"></canvas>
                 <div class="absolute bottom-1/4 left-10 right-10 border-b border-gray-300 pointer-events-none"></div>
                 <p class="absolute bottom-5 w-full text-center text-gray-400 text-sm pointer-events-none">Sign using
                     your finger or mouse</p>
